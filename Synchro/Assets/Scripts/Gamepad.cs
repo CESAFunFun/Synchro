@@ -32,6 +32,8 @@ public class Gamepad : MonoBehaviour
     }
 
     [HideInInspector] public Vector2 leftStick;
+    [HideInInspector] public Vector2 rightStick;
+    [HideInInspector] public float triggerButton;
 
     [HideInInspector] public Button buttonA;
     [HideInInspector] public Button buttonB;
@@ -44,6 +46,10 @@ public class Gamepad : MonoBehaviour
 
         leftStick.x = Input.GetAxis("Horizontal");
         leftStick.y = Input.GetAxis("Vertical");
+
+        rightStick.x = Input.GetAxis("Picth");
+        rightStick.y = Input.GetAxis("Yaw");
+        triggerButton = Input.GetAxis("Roll");
 
         buttonA.GetButton("Fire1");
         buttonB.GetButton("Fire2");
