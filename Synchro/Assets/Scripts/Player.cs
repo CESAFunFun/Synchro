@@ -15,7 +15,9 @@ public class Player : Character {
     public Gamepad gamepad;
 
     [SerializeField]
-    private UnityEngine.UI.Image garge;
+    private UnityEngine.UI.Image gravityGarge;
+    [SerializeField]
+    private UnityEngine.UI.Image blinkGarge;
 
 	// Use this for initialization
 	protected override void Start () {
@@ -41,27 +43,39 @@ public class Player : Character {
         {
             Jump(jumpPower);
         }
-
-        // 円ゲージを一定の位置に固定
-        garge.canvas.transform.rotation = Quaternion.Euler(0F, 0F, 0F);
+        
 
         // 重力反転処理
-        if(gamepad.buttonX.down)
+        if (Charge(gamepad.rightButton.down, gravityGarge))
         {
-            garge.fillAmount += 0.02F;
+            ChangeGravity();
+        }
 
-            if (garge.fillAmount >= 1F)
+        // 座標転移
+        if (Charge(gamepad.leftButton.down, blinkGarge))
+        {
+            if(_isGround) BlinkPosition();
+        }
+    }
+
+    bool Charge(bool button, UnityEngine.UI.Image image) {
+        image.canvas.transform.rotation = Quaternion.Euler(0F, 0F, 0F);
+
+        if (button)
+        {
+            image.fillAmount += 0.02F;
+
+            if (image.fillAmount >= 1F)
             {
-                // 円ゲージの値を初期化
-                garge.fillAmount = 0F;
-                // 重力の変更
-                ChangeGravity();
+                image.fillAmount = 0F;
+                return true;
             }
         }
         else
         {
-            // 押されていないときの円ゲージの値
-            garge.fillAmount = 0F;
+            image.fillAmount = 0F;
         }
+
+        return false;
     }
 }

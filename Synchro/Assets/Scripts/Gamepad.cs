@@ -62,6 +62,6 @@ public class Gamepad : MonoBehaviour
         rightButton.GetButton("RightShoulder");
 
         horizontal = Input.GetAxis("HorizontalKey");
-        horizontal = Input.GetAxis("VerticalKey");
+        vertical = Input.GetAxis("VerticalKey");
     }
 }
