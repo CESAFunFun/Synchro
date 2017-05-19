@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ClearZone : MonoBehaviour
 {
-    public bool isClear = false;
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" || other.tag == "Child")
+        if (other.tag == "Child")
         {
-            isClear = true;
+            GameObject.Find("GameManager").SendMessage("isClear");
         }
     }
+
+
 }

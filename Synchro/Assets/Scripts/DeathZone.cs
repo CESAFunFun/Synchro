@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
-    public bool isFail = false; 
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player" || other.tag == "Child")
         {
-            isFail = true;
+            GameObject.Find("GameManager").SendMessage("isFail",other.gameObject);
         }
     }
 }
