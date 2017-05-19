@@ -27,12 +27,12 @@ public class LinkedPlayer : MonoBehaviour {
         // 入力があれば操作を入れ替える
         foreach (var player in players)
         {
-            if(player.gamepad.rightButton.trigger)
+            if (player.gamepad.horizontal >= 1F)
             {
                 ChangePlayer(playerNumber, +1);
                 break;
             }
-            else if (player.gamepad.leftButton.trigger)
+            else if (player.gamepad.horizontal <= -1F)
             {
                 ChangePlayer(playerNumber, -1);
                 break;
