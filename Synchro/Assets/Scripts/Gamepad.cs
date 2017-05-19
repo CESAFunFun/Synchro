@@ -34,6 +34,8 @@ public class Gamepad : MonoBehaviour
     [HideInInspector] public Vector2 leftStick;
     [HideInInspector] public Vector2 rightStick;
     [HideInInspector] public float triggerButton;
+    [HideInInspector] public float horizontal;
+    [HideInInspector] public float vertical;
 
     [HideInInspector] public Button buttonA;
     [HideInInspector] public Button buttonB;
@@ -58,5 +60,8 @@ public class Gamepad : MonoBehaviour
 
         leftButton.GetButton("LeftShoulder");
         rightButton.GetButton("RightShoulder");
+
+        horizontal = Input.GetAxis("HorizontalKey");
+        horizontal = Input.GetAxis("VerticalKey");
     }
 }

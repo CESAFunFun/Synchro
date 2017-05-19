@@ -13,32 +13,40 @@ public class Character : MonoBehaviour {
     public float moveSpeed = 1F;
     public float jumpPower = 1F;
 
-    [SerializeField]
-    private bool _downGravity = true;
-
     private const float G_POWER = 9.8F;
 
     private bool _isGround;
+    private bool _downGravity;
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
     private Vector3 _gravity;
-
+    private Vector3 _respawn;
 
 	protected virtual void Start () {
         // 最初は必ず接地させないで
         _isGround = false;
+        // 下方向への重力を設定
+        _downGravity = true;
 
         // 物理演算コンポーネントを取得して重力用の設定
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.useGravity = false;
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        // 移動量と重力方向の初期化
+
+        // 移動量の初期化
         _velocity = Vector3.zero;
-        _gravity = Physics.gravity;
-	}
+        // 重力を上方向か下方向に設定
+        _gravity = _downGravity ? Vector3.down : Vector3.up;
+
+        // 最初の位置を保存しておく
+        _respawn = transform.position;
+    }
 	
 	protected virtual void Update () {
+        // 重力方向の線を描画
         Debug.DrawLine(transform.position, transform.position + _gravity.normalized);
+
+        // 移動量を初期化
         _velocity = Vector3.zero;
 
         // 接地していなければ落下
@@ -74,6 +82,20 @@ public class Character : MonoBehaviour {
         _downGravity = !_downGravity;
         // 重力を上方向か下方向に設定
         _gravity = _downGravity ? Vector3.down : Vector3.up;
+    }
+
+    public void Restart()
+    {
+        if (transform.parent != null)
+        {
+            transform.parent.position = _respawn;
+        }
+        else
+        {
+            transform.position = _respawn;
+        }
+
+        Start();
     }
 
     protected virtual void OnCollisionEnter(Collision collision) {

@@ -4,8 +4,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    public static GameManager instance;
+
+    private void Awake() {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -14,12 +28,11 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
-    private void isClear()
-    {
-        
+    private void isClear() {
+        Debug.Log("Clear");
     }
-    private void isFail(GameObject fallObject)
-    {
-
+    private void isFail(GameObject failObject) {
+        Debug.Log(failObject + ": Faild");
+        failObject.GetComponent<Player>().Restart();
     }
 }

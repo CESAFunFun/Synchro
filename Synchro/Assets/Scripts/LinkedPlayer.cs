@@ -14,10 +14,7 @@ public class LinkedPlayer : MonoBehaviour {
 
     [SerializeField]
     private RectTransform _turn;
-
-    [SerializeField]
-    private GameObject _NPC;
-
+    
     // Use this for initialization
     void Start () {
         ChangePlayer(playerNumber + 1, +1);
@@ -25,6 +22,8 @@ public class LinkedPlayer : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        Debug.DrawLine(players[0].transform.position, players[1].transform.position);
+
         // 入力があれば操作を入れ替える
         foreach (var player in players)
         {
@@ -44,12 +43,16 @@ public class LinkedPlayer : MonoBehaviour {
         if (players[0].isControll && players[1].isControll)
         {
             // player1とplayer2の差分が一定内であった場合に
-            var sub = players[0].transform.position - players[1].transform.position;
-            if ((sub.x >= -0.25F && sub.x <= 0.25F) && (sub.y >= -1F && sub.y <= 1F))
+            var playerSub = players[0].transform.position - players[1].transform.position;
+            if ((playerSub.x >= -0.25F && playerSub.x <= 0.25F) && (playerSub.y >= -1F && playerSub.y <= 1F))
             {
-                // Z軸を除いた位置を設定する
-                var pos = new Vector2(players[0].transform.position.x, players[1].transform.position.y);
-                _NPC.transform.position = new Vector3(pos.x, pos.y, _NPC.transform.position.z);
+                // playersとLinkedの差分内に位置を設定する
+                var sub = players[0].transform.position - transform.position;
+                if ((sub.x >= -0.25F && sub.x <= 0.25F) && (sub.y >= -1F && sub.y <= 1F))
+                {
+                    Vector3 pos = new Vector3(players[0].transform.position.x, players[1].transform.position.y, transform.position.z);
+                    transform.position = pos;
+                }
             }
         }
     }
