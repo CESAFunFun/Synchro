@@ -7,7 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Character {
+public class Player : Character
+{
 
     public Gamepad gamepad;
 
@@ -29,14 +30,16 @@ public class Player : Character {
 
     public static bool conectFlag { get { return conectflag; } }
     // Use this for initialization
-    protected override void Start () {
+    protected override void Start()
+    {
         // キャラクターの初期化
         base.Start();
         transform.name = "stupid";
-	}
+    }
 
     // Update is called once per frame
-    protected override void Update() {
+    protected override void Update()
+    {
         // キャラクターの更新
         base.Update();
 
@@ -53,12 +56,9 @@ public class Player : Character {
         }
 
         // 重力反転処理
-        if(gamepad.rightButton.trigger)
+        if (gamepad.rightButton.trigger)
         {
-            if (isGround)
-            {
-                ChangeGravity();
-            }
+            ChangeGravity();
         }
         // 足場反転処理
         if (gamepad.leftButton.trigger)
@@ -84,7 +84,7 @@ public class Player : Character {
                 }
             }
         }
-        if(child)
+        if (child)
         {
             //中間地点にnpcを移動させる
             var vec = partner.transform.position - transform.position;
@@ -96,7 +96,7 @@ public class Player : Character {
             }
             conectflag = true;
             vec = transform.position + vec / 2;
-            child.transform.position = new Vector3(vec.x,vec.y, child.transform.position.z);
+            child.transform.position = new Vector3(vec.x, vec.y, child.transform.position.z);
             child.GetComponent<Character>().downGravity = GetComponent<Character>().downGravity;
         }
     }
@@ -113,6 +113,7 @@ public class Player : Character {
         {
             Restart();
             partner.Restart();
+            conectflag = false;
         }
     }
 }

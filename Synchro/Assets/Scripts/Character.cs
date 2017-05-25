@@ -23,10 +23,13 @@ public class Character : MonoBehaviour {
     private Vector3 _gravity;
     private Vector3 _respawn;
 
+    private bool _skyChange;
+
 	protected virtual void Start () {
         // 重力関連のフラグを初期化
         isGround = false;
         downGravity = true;
+        _skyChange = true;
 
         // 物理演算コンポーネントを取得して重力用の設定
         _rigidbody = GetComponent<Rigidbody>();
@@ -80,9 +83,17 @@ public class Character : MonoBehaviour {
     }
 
     public void ChangeGravity(bool isGround = false) {
-        // 一度だけ宙に浮かせて反転させる
-        this.isGround = isGround;
-        downGravity = !downGravity;
+        if (this.isGround)
+        {         // 一度だけ宙に浮かせて反転させる
+            this.isGround = isGround;
+            downGravity = !downGravity;
+        }
+        else if(_skyChange)
+        {
+            this.isGround = isGround;
+            downGravity = !downGravity;
+            _skyChange = false;
+        }
     }
 
     public void BlinkPosition()
@@ -109,19 +120,36 @@ public class Character : MonoBehaviour {
         this.Start();
     }
 
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Map")
+        {
+            _skyChange = true;
+        }
+    }
+
     protected virtual void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Map")
         {
-            // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
-            if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
-            {
+            if (transform.position.y > collision.transform.position.y
+                && _gravity == Vector3.down)
                 isGround = true;
-            }
+            else if (transform.position.y < collision.transform.position.y
+                && _gravity == Vector3.up)
+                isGround = true;
             else
-            {
                 isGround = false;
-            }
+
+            //// オブジェクトに接触したら下方にレイを飛ばして接地を判定する
+            //if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
+            //{
+            //    isGround = true;
+            //}
+            //else
+            //{
+            //    isGround = false;
+            //}
         }
     }
 
