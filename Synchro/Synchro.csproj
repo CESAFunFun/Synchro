@@ -75,29 +75,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-    <Compile Include="Assets\Scripts\CameraWork.cs" />
-    <Compile Include="Assets\Scripts\Character.cs" />
-=======
+    <Compile Include="Assets\Line.cs" />
     <Compile Include="Assets\Scripts\CameraRote2.cs" />
     <Compile Include="Assets\Scripts\CameraWork.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\ChengeSpriteNum.cs" />
->>>>>>> ac5098d872ad26f87a6e798ec37b78172ff124b2
+    <Compile Include="Assets\Scripts\Child.cs" />
     <Compile Include="Assets\Scripts\ClearZone.cs" />
     <Compile Include="Assets\Scripts\DeathZone.cs" />
+    <Compile Include="Assets\Scripts\DestroyInSeconds.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Gamepad.cs" />
+    <Compile Include="Assets\Scripts\InversGravityByFloor.cs" />
     <Compile Include="Assets\Scripts\LinkedPlayer.cs" />
+    <Compile Include="Assets\Scripts\MoveByFloor.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
-<<<<<<< HEAD
-=======
     <Compile Include="Assets\Scripts\Result.cs" />
     <Compile Include="Assets\Scripts\SetDisplay.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Scripts\readCSVData.cs" />
     <Compile Include="Assets\Scripts\test.cs" />
->>>>>>> ac5098d872ad26f87a6e798ec37b78172ff124b2
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\ReadMe.txt" />

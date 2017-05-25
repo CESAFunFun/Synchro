@@ -103,20 +103,14 @@ public class Player : Character {
 
     public override void Restart()
     {
-        base.Restart();
-
         child = null;
+        base.Restart();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "DeadZone")
         {
-            if (child)
-            {
-                child.Restart();
-                child = null;
-            }
             Restart();
             partner.Restart();
         }
