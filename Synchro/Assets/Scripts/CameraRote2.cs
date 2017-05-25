@@ -16,6 +16,9 @@ public class CameraRote2 : MonoBehaviour
 
     public int count = 0;
 
+    [SerializeField]
+    private Gamepad _gamepad;
+
     // Use this for initialization
     void Start()
     {
@@ -27,7 +30,7 @@ public class CameraRote2 : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (_gamepad.rightStick.x <= -1F)
             if(count<3)
                 _leftflag = true;
 
@@ -46,7 +49,7 @@ public class CameraRote2 : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (_gamepad.rightStick.x >= 1F)
             if (count > -3)
                 _rightflag = true;
 

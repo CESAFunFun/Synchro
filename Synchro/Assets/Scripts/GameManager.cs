@@ -18,21 +18,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     private void isClear() {
         Debug.Log("Clear");
     }
+
     private void isFail(GameObject failObject) {
-        Debug.Log(failObject + ": Faild");
-        failObject.GetComponent<Player>().Restart();
+        failObject.GetComponent<Character>().Restart();
     }
 }

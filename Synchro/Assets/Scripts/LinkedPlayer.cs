@@ -11,6 +11,7 @@ public class LinkedPlayer : MonoBehaviour {
 
     public int playerNumber = 0;
     public Player[] players;
+    public Character npc;
 
     [SerializeField]
     private RectTransform _turn;
@@ -27,12 +28,12 @@ public class LinkedPlayer : MonoBehaviour {
         // 入力があれば操作を入れ替える
         foreach (var player in players)
         {
-            if (player.gamepad.horizontal >= 1F)
+            if (player.gamepad.buttonX.trigger)
             {
                 ChangePlayer(playerNumber, +1);
                 break;
             }
-            else if (player.gamepad.horizontal <= -1F)
+            else if (player.gamepad.buttonB.trigger)
             {
                 ChangePlayer(playerNumber, -1);
                 break;
@@ -47,11 +48,12 @@ public class LinkedPlayer : MonoBehaviour {
             if ((playerSub.x >= -0.25F && playerSub.x <= 0.25F) && (playerSub.y >= -1F && playerSub.y <= 1F))
             {
                 // playersとLinkedの差分内に位置を設定する
-                var sub = players[0].transform.position - transform.position;
+                var sub = players[0].transform.position - npc.transform.position;
                 if ((sub.x >= -0.25F && sub.x <= 0.25F) && (sub.y >= -1F && sub.y <= 1F))
                 {
                     Vector3 pos = new Vector3(players[0].transform.position.x, players[1].transform.position.y, transform.position.z);
-                    transform.position = pos;
+                    npc.transform.position = pos;
+                    npc.downGravity = players[0].downGravity;
                 }
             }
         }

@@ -44,6 +44,11 @@ public class Gamepad : MonoBehaviour
     [HideInInspector] public Button leftButton;
     [HideInInspector] public Button rightButton;
 
+    [HideInInspector] public Button backButton;
+    [HideInInspector] public Button startButton;
+    [HideInInspector] public Button leftStickPress;
+    [HideInInspector] public Button rightStickPress;
+
     void Update() {
 
         leftStick.x = Input.GetAxis("Horizontal");
@@ -60,6 +65,10 @@ public class Gamepad : MonoBehaviour
 
         leftButton.GetButton("LeftShoulder");
         rightButton.GetButton("RightShoulder");
+        backButton.GetButton("BackButton");
+        startButton.GetButton("StartButton");
+        leftStickPress.GetButton("LeftStickPress");
+        rightStickPress.GetButton("RightStickPress");
 
         horizontal = Input.GetAxis("HorizontalKey");
         vertical = Input.GetAxis("VerticalKey");
