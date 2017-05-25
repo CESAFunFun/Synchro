@@ -5,6 +5,9 @@ using UnityEngine;
 public class SetDisplay : MonoBehaviour {
 
     [SerializeField]
+    private Gamepad _gamepad;
+
+    [SerializeField]
     private GameObject _mainCam;
 
     [SerializeField]
@@ -20,7 +23,7 @@ public class SetDisplay : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (_gamepad.rightStickPress.trigger)
         {
             if (_mainCam.activeSelf)
             {

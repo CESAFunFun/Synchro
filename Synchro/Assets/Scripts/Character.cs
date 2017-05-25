@@ -12,22 +12,21 @@ public class Character : MonoBehaviour {
 
     public float moveSpeed = 1F;
     public float jumpPower = 1F;
+    public bool isGround = false;
+    public bool downGravity = true;
 
     private const float G_POWER = 9.8F;
-    private const float G_LENGTH = 0.5F;
+    private const float G_LENGTH = 1F;
 
-    protected bool _isGround;
-    protected bool _downGravity;
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
     private Vector3 _gravity;
     private Vector3 _respawn;
 
 	protected virtual void Start () {
-        // 最初は必ず接地させないで
-        _isGround = false;
-        // 下方向への重力を設定
-        _downGravity = true;
+        // 重力関連のフラグを初期化
+        isGround = false;
+        downGravity = true;
 
         // 物理演算コンポーネントを取得して重力用の設定
         _rigidbody = GetComponent<Rigidbody>();
@@ -37,7 +36,7 @@ public class Character : MonoBehaviour {
         // 移動量の初期化
         _velocity = Vector3.zero;
         // 重力を上方向か下方向に設定
-        _gravity = _downGravity ? Vector3.down : Vector3.up;
+        _gravity = downGravity ? Vector3.down : Vector3.up;
 
         // 最初の位置を保存しておく
         _respawn = transform.position;
@@ -47,11 +46,13 @@ public class Character : MonoBehaviour {
         // 重力方向の線を描画
         Debug.DrawLine(transform.position, transform.position + _gravity.normalized * G_LENGTH);
 
-        // 移動量を初期化
+        // 移動量の初期化
         _velocity = Vector3.zero;
+        // 重力を上方向か下方向に設定
+        _gravity = downGravity ? Vector3.down : Vector3.up;
 
         // 接地していなければ落下
-        if (!_isGround)
+        if (!isGround)
         {
             _rigidbody.AddForce(_gravity.normalized * G_POWER);
         }
@@ -69,28 +70,19 @@ public class Character : MonoBehaviour {
 
     public void Jump(float power) {
         // 接地していた場合のみ
-        if (_isGround)
+        if (isGround)
         {
+            isGround = false;
             // 自身の上方向(重力方向の逆)に力を加える
             var jumpVec = -_gravity.normalized;
-            transform.position += jumpVec * 0.3F;
             _rigidbody.AddForce(jumpVec * power * 50F);
         }
     }
 
     public void ChangeGravity(bool isGround = false) {
         // 一度だけ宙に浮かせて反転させる
-        _isGround = isGround;
-        _downGravity = !_downGravity;
-        // 重力を上方向か下方向に設定
-        _gravity = _downGravity ? Vector3.down : Vector3.up;
-    }
-
-    public void BlinkPosition() {
-        // 位置を入れ替えるための原点（重力の原点）
-        var point = transform.position + _gravity;
-        transform.RotateAround(point, Vector3.left, 180F);
-        ChangeGravity(true);
+        this.isGround = isGround;
+        downGravity = !downGravity;
     }
 
     public void Restart() {
@@ -108,19 +100,23 @@ public class Character : MonoBehaviour {
         this.Start();
     }
 
-    protected virtual void OnCollisionEnter(Collision collision) {
-        // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
-        if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
+    protected virtual void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Map")
         {
-            _isGround = true;
-        }
-        else
-        {
-            _isGround = false;
+            // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
+            if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
+            {
+                isGround = true;
+            }
+            else
+            {
+                isGround = false;
+            }
         }
     }
 
     protected virtual void OnCollisionExit(Collision collision) {
-        _isGround = false;
+        isGround = false;
     }
 }
