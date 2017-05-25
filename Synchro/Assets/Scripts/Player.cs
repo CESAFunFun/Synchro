@@ -14,10 +14,25 @@ public class Player : Character {
     [HideInInspector]
     public bool isControll = true;
 
-	// Use this for initialization
-	protected override void Start () {
+    public void Controll(bool flag)
+    {
+        isControll = flag;
+    }
+
+    [SerializeField]
+    private Player partner;
+
+    [SerializeField]
+    private static Character child;
+
+    private static bool conectflag = false;
+
+    public static bool conectFlag { get { return conectflag; } }
+    // Use this for initialization
+    protected override void Start () {
         // キャラクターの初期化
         base.Start();
+        transform.name = "stupid";
 	}
 
     // Update is called once per frame
@@ -44,6 +59,66 @@ public class Player : Character {
             {
                 ChangeGravity();
             }
+        }
+        // 足場反転処理
+        if (gamepad.leftButton.trigger)
+        {
+            if (isGround)
+            {
+                BlinkPosition();
+            }
+        }
+
+        //npcが間にいるか判定
+        if (!child)
+        {
+            var dis = Vector3.Distance(transform.position, partner.transform.position);
+            var dir = partner.transform.position - transform.position;
+
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, dir, out hit, dis))
+            {
+                if (hit.transform.tag == "Child")
+                {
+                    child = hit.transform.gameObject.GetComponent<Character>();
+                }
+            }
+        }
+        if(child)
+        {
+            //中間地点にnpcを移動させる
+            var vec = partner.transform.position - transform.position;
+
+            if ((vec.x <= -0.25F || vec.x >= 0.25F) || (vec.y <= -1F || vec.y >= 1F))
+            {
+                conectflag = false;
+                return;
+            }
+            conectflag = true;
+            vec = transform.position + vec / 2;
+            child.transform.position = new Vector3(vec.x,vec.y, child.transform.position.z);
+            child.GetComponent<Character>().downGravity = GetComponent<Character>().downGravity;
+        }
+    }
+
+    public override void Restart()
+    {
+        base.Restart();
+
+        child = null;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "DeadZone")
+        {
+            if (child)
+            {
+                child.Restart();
+                child = null;
+            }
+            Restart();
+            partner.Restart();
         }
     }
 }

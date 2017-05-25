@@ -85,8 +85,17 @@ public class Character : MonoBehaviour {
         downGravity = !downGravity;
     }
 
-    public void Restart() {
+    public void BlinkPosition()
+    {
+        // 位置を入れ替えるための原点（重力の原点）
+        var point = transform.position + _gravity;
+        transform.RotateAround(point, Vector3.left, 180F);
+        ChangeGravity(true);
+    }
+
+    public virtual void Restart() {
         // (親がいれば親の)位置座標を最初に戻す
+
         if (transform.parent != null)
         {
             transform.parent.position = _respawn;

@@ -8,7 +8,10 @@ public class DeathZone : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            GameObject.Find("GameManager").SendMessage("isFail",other.gameObject);
+
+
+
+            //GameObject.Find("GameManager").SendMessage("isFail",other.gameObject);
         }
     }
 }
