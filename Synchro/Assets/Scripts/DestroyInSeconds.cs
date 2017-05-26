@@ -9,16 +9,27 @@ public class DestroyInSeconds : MonoBehaviour {
 
     [SerializeField]
     private float _destroyIn = 2;
-	
-	// Update is called once per frame
-	void Update () {
-        _time++;
-
-        //時間たつと破棄する
-        if(_time >= 60 * _destroyIn)
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Child")
         {
-            _time = 0;
-            Destroy(gameObject);
+            _time++;
+            //時間たつと破棄する
+            if (_time >= 60 * _destroyIn)
+            {
+                _time = 0;
+                Destroy(gameObject);
+            }
         }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        _time = 0;
+    }
+
+    // Update is called once per frame
+    void Update () {
+        
+        
 	}
 }
