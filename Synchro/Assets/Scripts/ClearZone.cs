@@ -5,9 +5,9 @@ using UnityEngine;
 public class ClearZone : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player")
+        if (other.tag == "Child")
         {
-            GameObject.Find("GameManager").SendMessage("isClear");
+            GameManager.Instance.SendMessage("isClear");
         }
     }
 }

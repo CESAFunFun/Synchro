@@ -24,7 +24,6 @@ public class LinkedPlayer : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         Debug.DrawLine(players[0].transform.position, players[1].transform.position);
-
         // 入力があれば操作を入れ替える
         foreach (var player in players)
         {
