@@ -5,10 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Cursor : MonoBehaviour
 {
-
-    [SerializeField]
-    private Gamepad _gamepad;
-
     [SerializeField]
     private int number = 8;
 
@@ -18,6 +14,7 @@ public class Cursor : MonoBehaviour
     [SerializeField]
     private Vector2 _lerpLength = Vector2.one;
 
+    private Gamepad _gamepad;
     private RectTransform _rectTransform;
     private bool _isLerp;
     private float _startTime;
@@ -27,6 +24,7 @@ public class Cursor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        _gamepad = GameManager.Instance.gamePad;
         _rectTransform = GetComponent<RectTransform>();
         _isLerp = false;
         _startPosition = transform.position;

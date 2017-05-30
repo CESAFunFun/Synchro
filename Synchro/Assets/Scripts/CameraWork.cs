@@ -5,19 +5,19 @@ using UnityEngine;
 public class CameraWork : MonoBehaviour {
 
     [SerializeField]
-    private Gamepad _gamepad;
-    [SerializeField]
     private float _roteSpeed = 60F;
     [SerializeField]
     private Camera _mainCamera;
     [SerializeField]
     private Camera _subCamera;
 
+    private Gamepad _gamepad;
     private float _angle;
     private int _side;
 
 	// Use this for initialization
 	void Start () {
+        _gamepad = GameManager.Instance.gamePad;
         _angle = 0F;
         _side = 0;
 	}

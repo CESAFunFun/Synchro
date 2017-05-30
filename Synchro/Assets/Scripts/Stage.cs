@@ -6,4 +6,9 @@ public class Stage : MonoBehaviour {
 
     public int stageLevel;
     public GameObject[] stageObjects;
+
+    private void Start()
+    {
+        stageLevel = GameManager.Instance.mapLevel;
+    }
 }
