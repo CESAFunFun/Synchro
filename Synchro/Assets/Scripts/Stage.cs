@@ -6,14 +6,4 @@ public class Stage : MonoBehaviour {
 
     public int stageLevel;
     public GameObject[] stageObjects;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
