@@ -51,37 +51,41 @@ public class Cursor : MonoBehaviour
         {
             _startTime = Time.timeSinceLevelLoad;
             _startPosition = _rectTransform.position;
+            if (_gamepad == null)
+                _gamepad = GameManager.Instance.gamePad;
+            else
+            {
+                if (_gamepad.leftStick.x <= -1F)
+                {
+                    _endPosition += Vector3.left * _lerpLength.x;
+                    number += -1;
+                    _isLerp = true;
+                }
+                if (_gamepad.leftStick.x >= 1F)
+                {
+                    _endPosition += Vector3.right * _lerpLength.x;
+                    number += +1;
+                    _isLerp = true;
+                }
 
-            if (_gamepad.leftStick.x <= -1F)
-            {
-                _endPosition += Vector3.left * _lerpLength.x;
-                number += -1;
-                _isLerp = true;
-            }
-            if (_gamepad.leftStick.x >= 1F)
-            {
-                _endPosition += Vector3.right * _lerpLength.x;
-                number += +1;
-                _isLerp = true;
-            }
+                if (_gamepad.leftStick.y <= -1F)
+                {
+                    _endPosition += Vector3.down * _lerpLength.y;
+                    number += +5;
+                    _isLerp = true;
+                }
+                if (_gamepad.leftStick.y >= 1F)
+                {
+                    _endPosition += Vector3.up * _lerpLength.y;
+                    number += -5;
+                    _isLerp = true;
+                }
 
-            if (_gamepad.leftStick.y <= -1F)
-            {
-                _endPosition += Vector3.down * _lerpLength.y;
-                number += +5;
-                _isLerp = true;
-            }
-            if (_gamepad.leftStick.y >= 1F)
-            {
-                _endPosition += Vector3.up * _lerpLength.y;
-                number += -5;
-                _isLerp = true;
-            }
-
-            if (_gamepad.buttonX.trigger)
-            {
-                GameManager.Instance.mapLevel = number;
-                SceneManager.LoadScene(nextSceneName);
+                if (_gamepad.buttonX.trigger)
+                {
+                    GameManager.Instance.mapLevel = number;
+                    SceneManager.LoadScene(nextSceneName);
+                }
             }
         }
     }

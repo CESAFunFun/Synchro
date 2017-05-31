@@ -19,6 +19,9 @@ public class test : MonoBehaviour {
         currentMap = gameObject.transform.parent.GetComponent<Stage>().stageLevel;
         objects = gameObject.transform.parent.GetComponent<Stage>().stageObjects;
 
+        Debug.Log(currentMap);
+
+
         int x = 0;
         int y = 0;
         StringReader reader = new StringReader(maps[currentMap - 1].text);

@@ -7,8 +7,9 @@ public class Stage : MonoBehaviour {
     public int stageLevel;
     public GameObject[] stageObjects;
 
-    private void Start()
+    private void Awake()
     {
         stageLevel = GameManager.Instance.mapLevel;
+        Debug.Log(stageLevel);
     }
 }
