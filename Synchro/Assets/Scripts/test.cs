@@ -7,18 +7,24 @@ using System;
 public class test : MonoBehaviour {
 
     [SerializeField]
-    private TextAsset map;
+    private TextAsset[] maps;
 
-    [SerializeField]
-    private GameObject[] stageObject;
+    private GameObject[] objects;
 
+    private int currentMap;
 
     // Use this for initialization
     void Start()
     {
+        currentMap = gameObject.transform.parent.GetComponent<Stage>().stageLevel;
+        objects = gameObject.transform.parent.GetComponent<Stage>().stageObjects;
+
+        Debug.Log(currentMap);
+
+
         int x = 0;
         int y = 0;
-        StringReader reader = new StringReader(map.text);
+        StringReader reader = new StringReader(maps[currentMap - 1].text);
         while (reader.Peek() > -1)
         {
             string line = reader.ReadLine();
@@ -29,11 +35,11 @@ public class test : MonoBehaviour {
 
                 int a = int.Parse(str);
                 print(a);
-                if (a >= 0 && a < stageObject.Length)
+                if (a >= 0 && a < objects.Length)
                 {
-                    obj = Instantiate(stageObject[a], transform);
-                    obj.transform.position = new Vector3(x, y, 0);
-                    obj.transform.localScale = new Vector3(5, 5, 5);
+                    obj = Instantiate(objects[a], transform);
+                    obj.transform.position = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z);
+                    obj.transform.localScale = new Vector3(4, 4, 4);
                 }
                 x += 5;
             }

@@ -82,6 +82,8 @@
     <Compile Include="Assets\Scripts\ChengeSpriteNum.cs" />
     <Compile Include="Assets\Scripts\Child.cs" />
     <Compile Include="Assets\Scripts\ClearZone.cs" />
+    <Compile Include="Assets\Scripts\CreateMap.cs" />
+    <Compile Include="Assets\Scripts\Cursor.cs" />
     <Compile Include="Assets\Scripts\DeathZone.cs" />
     <Compile Include="Assets\Scripts\DestroyInSeconds.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Result.cs" />
     <Compile Include="Assets\Scripts\SetDisplay.cs" />
+    <Compile Include="Assets\Scripts\Stage.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Scripts\readCSVData.cs" />
     <Compile Include="Assets\Scripts\test.cs" />
