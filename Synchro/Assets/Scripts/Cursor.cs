@@ -81,8 +81,9 @@ public class Cursor : MonoBehaviour
                     _isLerp = true;
                 }
 
-                if (_gamepad.buttonX.trigger)
+                if (_gamepad.startButton.trigger)
                 {
+                    Debug.Log("Start");
                     GameManager.Instance.mapLevel = number;
                     SceneManager.LoadScene(nextSceneName);
                 }

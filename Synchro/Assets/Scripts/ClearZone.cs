@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClearZone : MonoBehaviour
 {
@@ -18,7 +19,10 @@ public class ClearZone : MonoBehaviour
     {
         if (clear)
         {
-            GUI.Button(new Rect(Screen.width/2, 100, 450, 100), "Clear");
+            if(GUI.Button(new Rect(Screen.width/2, 100, 450, 100), "Clear"))
+            {
+                SceneManager.LoadScene("Select");
+            }
         }
     }
 }
