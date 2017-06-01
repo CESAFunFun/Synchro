@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class ClearZone : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other) {
+    bool clear = false;
+
+    private void OnTriggerEnter(Collider other)
+    {
         if (other.tag == "Child")
         {
-            GameManager.Instance.SendMessage("isClear");
+            clear = true;
+            //GameManager.Instance.SendMessage("isClear");
+        }
+    }
+    private void OnGUI()
+    {
+        if (clear)
+        {
+            GUI.Button(new Rect(Screen.width/2, 100, 450, 100), "Clear");
         }
     }
 }

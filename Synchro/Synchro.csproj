@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Line.cs" />
+    <Compile Include="Assets\Scripts\CameraMove.cs" />
     <Compile Include="Assets\Scripts\CameraRote2.cs" />
     <Compile Include="Assets\Scripts\CameraWork.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\InversGravityByFloor.cs" />
     <Compile Include="Assets\Scripts\LinkedPlayer.cs" />
     <Compile Include="Assets\Scripts\MoveByFloor.cs" />
+    <Compile Include="Assets\Scripts\NextStege.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Result.cs" />
     <Compile Include="Assets\Scripts\SetDisplay.cs" />

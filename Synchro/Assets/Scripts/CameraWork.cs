@@ -11,6 +11,8 @@ public class CameraWork : MonoBehaviour {
     [SerializeField]
     private Camera _subCamera;
 
+    [SerializeField]
+    private bool test = true;
     private Gamepad _gamepad;
     private float _angle;
     private Vector2 _side;
@@ -26,12 +28,12 @@ public class CameraWork : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if(_gamepad.rightStickPress.trigger)
-        {
-            // アクティブとなっていない方のカメラに切り替える
-            ChangeDisplay(!_mainCamera.gameObject.activeSelf);
-            _sideMax = Vector2.zero;
-        }
+        //if(_gamepad.rightStickPress.trigger)
+        //{
+        //    // アクティブとなっていない方のカメラに切り替える
+        //    ChangeDisplay(!_mainCamera.gameObject.activeSelf);
+        //    _sideMax = Vector2.zero;
+        //}
         
         // カメラの角度を変える
         RotationCamera();
@@ -57,7 +59,7 @@ public class CameraWork : MonoBehaviour {
         //回転してなかったら処理(X軸)
         if (_gamepad.rightStick.x <= -1F)
         {
-            if (_sideMax.x < 1)
+            if (_sideMax.x < 1 && _sideMax.y == 0)
             {
                 _side.x = +1;
                 _sideMax.x += 1;
@@ -65,29 +67,29 @@ public class CameraWork : MonoBehaviour {
         }
         if (_gamepad.rightStick.x >= 1F)
         {
-            if (_sideMax.x > -1)
+            if (_sideMax.x > -1 && _sideMax.y == 0)
             {
                 _side.x = -1;
                 _sideMax.x -= 1;
             }
         }
-        ////回転してなかったら処理(Y軸)
-        //if (_gamepad.rightStick.y <= -1F)
-        //{
-        //    if (_sideMax.y < 1)
-        //    {
-        //        _side.y = +1;
-        //        _sideMax.y += 1;
-        //    }
-        //}
-        //if (_gamepad.rightStick.y >= 1F)
-        //{
-        //    if (_sideMax.y > -1)
-        //    {
-        //        _side.y = -1;
-        //        _sideMax.y -= 1;
-        //    }
-        //}
+        //回転してなかったら処理(Y軸)
+        if (_gamepad.rightStick.y <= -1F)
+        {
+            if (_sideMax.y < 1 && _sideMax.x == 0)
+            {
+                _side.y = +1;
+                _sideMax.y += 1;
+            }
+        }
+        if (_gamepad.rightStick.y >= 1F)
+        {
+            if (_sideMax.y > -1 && _sideMax.x == 0)
+            {
+                _side.y = -1;
+                _sideMax.y -= 1;
+            }
+        }
     }
 
     bool RotaTarget()
@@ -99,13 +101,27 @@ public class CameraWork : MonoBehaviour {
             transform.Rotate((Vector3.up * _side.x) * Time.deltaTime * _roteSpeed);
             return true;
         }
-        //// 回転中かどうかを判定
-        //if (_side.y != 0 && _angle < 45F)
-        //{
-        //    _angle += Time.deltaTime * _roteSpeed;
-        //    transform.Rotate((Vector3.right * _side.y) * Time.deltaTime * _roteSpeed);
-        //    return true;
-        //}
+        if (_gamepad.rightStickPress.trigger)
+        {
+            test = !test;
+        }
+        
+        var testvalue = test ? 30F : 1.5;
+
+        // 回転中かどうかを判定
+        if (_side.y != 0 && _angle < testvalue)
+        {
+            _angle += Time.deltaTime * _roteSpeed;
+            if (test)
+            {
+                transform.Rotate((Vector3.right * _side.y) * Time.deltaTime * _roteSpeed);
+            }
+            else
+            {
+                transform.Translate((Vector3.up * _side.y) * Time.deltaTime * _roteSpeed);
+            }
+            return true;
+        }
 
         // 回転していない状態に戻す
         _angle = 0F;
