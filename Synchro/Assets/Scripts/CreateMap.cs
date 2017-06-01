@@ -6,44 +6,42 @@ using System.IO;
 public class CreateMap : MonoBehaviour {
 
     [SerializeField]
-    private TextAsset[] mapdata;
+    private float _scaleing = 1F;
 
-    private GameObject[] mapchip;
-    private int currentMapLevel;
+    [SerializeField]
+    private TextAsset[] _mapchip;
 
-	// Use this for initialization
-	void Start () {
-        // 親オブジェクト内のステージからオブジェクトとレベルし作成
+    private GameObject[] _mapdate;
+
+    // Use this for initialization
+    void Start() {
+        // 親オブジェクトのステージからリソースを取得
         var stage = transform.parent.GetComponent<Stage>();
-        mapchip = stage.stageObjects;
-        this.ReMakeMap(stage.stageLevel);
-    }
+        _mapdate = stage.stageObjects;
 
-    public void ReMakeMap(int mapLevel) {
-        // マップチップ１つ分の差分は埋める
-        float scaling = 0F;
-        Vector2 sub = Vector2.zero;
+        Vector3 sub = Vector3.zero;
 
-        // 指定されたレベルのテキストを読み込みマップの作成
-        StringReader reader = new StringReader(mapdata[mapLevel - 1].text);
+        // テキストからマップデータを読み込み
+        StringReader reader = new StringReader(_mapchip[stage.stageLevel - 1].text);
         while (reader.Peek() > -1)
         {
-            var line = reader.ReadLine();
-            var values = line.Split(',');
+            // カンマ区切りで読み込んで行ごとにマップを作成
+            string line = reader.ReadLine();
+            string[] values = line.Split(',');
             foreach (string value in values)
             {
+                // 読み込んだからマップを作成
                 int integer = int.Parse(value);
-                if (integer >= 0 && integer < mapchip.Length)
+                if (integer >= 0 && integer < _mapdate.Length)
                 {
-                    var position = transform.position;
-                    var obj = Instantiate(mapchip[integer], transform);
-                    obj.transform.position = new Vector3(position.x + sub.x, position.y + sub.y, position.z);
-                    obj.transform.localScale = Vector3.one * 1F;
-                    scaling = obj.transform.localScale.x;
+                    // 位置座標の差分を加味してリソースを配置
+                    var obj = Instantiate(_mapdate[integer], transform);
+                    obj.transform.position = transform.position + sub;
+                    obj.transform.localScale = Vector3.one * _scaleing;
                 }
-                sub.x += (scaling + scaling * 0.25F);
+                sub.x += (int)(_scaleing * 1.5F);
             }
-            sub.x = 0F; sub.y -= (scaling + scaling * 0.25F);
+            sub.x = 0; sub.y -= (int)(_scaleing * 1.5F);
         }
     }
 }
