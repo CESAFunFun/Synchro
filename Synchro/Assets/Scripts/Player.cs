@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-
+    [HideInInspector]
     public Gamepad gamepad;
 
     [HideInInspector]
@@ -34,6 +34,7 @@ public class Player : Character
     {
         // キャラクターの初期化
         base.Start();
+        gamepad = GameManager.Instance.gamePad;
         transform.name = "stupid";
     }
 
