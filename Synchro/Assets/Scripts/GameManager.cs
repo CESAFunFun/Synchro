@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+
+        gamePad = GetComponent<Gamepad>();
         if (instance != null)
         {
             Destroy(gameObject);
@@ -28,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        gamePad = GetComponent<Gamepad>();
+        //gamePad = GetComponent<Gamepad>();
     }
 
     private void Update()
