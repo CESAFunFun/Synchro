@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class LinkedPlayer : MonoBehaviour {
 
+    [HideInInspector]
     public Gamepad gamepad;
 
     [SerializeField]
@@ -23,6 +24,7 @@ public class LinkedPlayer : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        gamepad = GameManager.Instance.gamePad;
         renderer = GetComponent<LineRenderer>();
     }
 
