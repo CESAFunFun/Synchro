@@ -13,18 +13,20 @@ public class DestroyInSeconds : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Child")
         {
-            _time++;
-            //時間たつと破棄する
-            if (_time >= 60 * _destroyIn)
-            {
-                _time = 0;
-                Destroy(gameObject);
-            }
+
+            Destroy(gameObject, _destroyIn);
+            //_time++;
+            ////時間たつと破棄する
+            //if (_time >= 60 * _destroyIn)
+            //{
+            //    _time = 0;
+            //    Destroy(gameObject);
+            //}
         }
     }
     private void OnCollisionExit(Collision collision)
     {
-        _time = 0;
+        //_time = 0;
     }
 
     // Update is called once per frame
