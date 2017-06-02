@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour {
 
+    public Vector2 maximum;
+    public Vector2 minimum;
+
     private Gamepad _gamepad;
+
+    private Vector3 _startPosition;
 
     [SerializeField]
     private float speed=5;
@@ -16,8 +21,8 @@ public class CameraMove : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
         _gamepad = GameManager.Instance.gamePad;
+        _startPosition = transform.position;
     }
 	
 	// Update is called once per frame
@@ -38,7 +43,7 @@ public class CameraMove : MonoBehaviour {
         if (_gamepad.rightStick.x <= -1F)
         {
             //左端までしか移動できないようにする
-            if (transform.position.x > 0)
+            if (transform.position.x > minimum.x)
             {
                 if (_mainCamera.gameObject.active)
                     move.x = -speed;
@@ -49,7 +54,7 @@ public class CameraMove : MonoBehaviour {
         }
         if (_gamepad.rightStick.x >= 1F)
         {
-            if (transform.position.x < 100)
+            if (transform.position.x < maximum.x)
             {
                 if (_mainCamera.gameObject.active)
                     move.x = speed;
@@ -63,7 +68,7 @@ public class CameraMove : MonoBehaviour {
         //回転してなかったら処理(Y軸)
         if (_gamepad.rightStick.y <= -1F)
         {
-            if (transform.position.y < 0)
+            if (transform.position.y < maximum.y)
             {
                 move.y = speed;
                 transform.Translate(move * Time.deltaTime);
@@ -71,13 +76,17 @@ public class CameraMove : MonoBehaviour {
         }
         if (_gamepad.rightStick.y >= 1F)
         {
-            if (transform.position.y > -60)
+            if (transform.position.y > minimum.y)
             {
                 move.y = -speed;
                 transform.Translate(move * Time.deltaTime);
             }
         }
 
+        if(_gamepad.rightStickPress.trigger)
+        {
+            transform.position = _startPosition;
+        }
     }
     private void ChangeDisplay(bool main)
     {

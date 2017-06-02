@@ -38,7 +38,7 @@ public class test : MonoBehaviour {
                 if (a >= 0 && a < objects.Length)
                 {
                     obj = Instantiate(objects[a], transform);
-                    obj.transform.position = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z);
+                    obj.transform.position = new Vector3(x, y, 0F);
                     obj.transform.localScale = new Vector3(4, 4, 4);
                 }
                 x += 5;
