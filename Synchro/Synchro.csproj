@@ -86,12 +86,14 @@
     <Compile Include="Assets\Scripts\CreateMap.cs" />
     <Compile Include="Assets\Scripts\Cursor.cs" />
     <Compile Include="Assets\Scripts\DeathZone.cs" />
-    <Compile Include="Assets\Scripts\DestroyInSeconds.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Gamepad.cs" />
-    <Compile Include="Assets\Scripts\InversGravityByFloor.cs" />
+    <Compile Include="Assets\Scripts\Gimmick\Blink.cs" />
+    <Compile Include="Assets\Scripts\Gimmick\DestroyInSeconds.cs" />
+    <Compile Include="Assets\Scripts\Gimmick\InversGravityByFloor.cs" />
+    <Compile Include="Assets\Scripts\Gimmick\MoveByFloor.cs" />
+    <Compile Include="Assets\Scripts\Gimmick\MovingFloor.cs" />
     <Compile Include="Assets\Scripts\LinkedPlayer.cs" />
-    <Compile Include="Assets\Scripts\MoveByFloor.cs" />
     <Compile Include="Assets\Scripts\NextStege.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Result.cs" />

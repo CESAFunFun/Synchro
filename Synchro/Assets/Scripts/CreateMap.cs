@@ -39,9 +39,9 @@ public class CreateMap : MonoBehaviour {
                     obj.transform.position = transform.position + sub;
                     obj.transform.localScale = Vector3.one * _scaleing;
                 }
-                sub.x += (int)(_scaleing * 1.5F);
+                sub.x += _scaleing * 1.25F;
             }
-            sub.x = 0; sub.y -= (int)(_scaleing * 1.5F);
+            sub.x = 0; sub.y -= _scaleing * 1.25F;
         }
     }
 }

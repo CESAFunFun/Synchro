@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [HideInInspector]
     public Gamepad gamePad;
+
+    private bool _isGoal = false;
 
     private static GameManager instance;
 
@@ -33,17 +36,42 @@ public class GameManager : MonoBehaviour
         //gamePad = GetComponent<Gamepad>();
     }
 
-    private void Update()
-    {
+    private void Update() {
+        if(_isGoal)
+        {
+            // クリアしたらSelectへ遷移
+            if (gamePad.startButton.trigger)
+            {
+                _isGoal = false;
+                SceneManager.LoadScene("Select");
+            }
+        }
+        else
+        {
+            // デバック用にSelectへ遷移
+            if (gamePad.backButton.trigger)
+            {
+                SceneManager.LoadScene("Select");
+            }
+        }
     }
 
     private void isClear()
     {
-        Debug.Log("Clear");
+        _isGoal = true;
     }
 
     private void isFail(GameObject failObject)
     {
         failObject.GetComponent<Character>().Restart();
     }
+    private void OnGUI()
+    {
+        if (_isGoal)
+        {
+            //if (GUI.Button(new Rect(Screen.width / 2, 100, 450, 100), "Clear"))
+            GUI.TextArea(new Rect(Screen.width / 2F, Screen.height / 2F, 75, 50), "Clear!");
+        }
+    }
+
 }
