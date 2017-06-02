@@ -15,13 +15,15 @@ public class Character : MonoBehaviour {
     public bool isGround = false;
     public bool downGravity = true;
 
+    [HideInInspector]
+    public Vector3 _respawn;
+
     private const float G_POWER = 9.8F;
     private const float G_LENGTH = 1F;
 
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
     private Vector3 _gravity;
-    private Vector3 _respawn;
 
     private bool _skyChange;
 
