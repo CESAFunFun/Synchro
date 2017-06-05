@@ -12,6 +12,31 @@ public class Child : Character {
         base.Start();
 	}
 
+    protected override void Update()
+    {
+        base.Update();
+
+        if(players[0].conectflag && players[1].conectflag)
+        {
+            if (players[0].conectflag)
+            {
+                this.downGravity = players[0].downGravity;
+                transform.position = new Vector3(
+                    players[0].transform.position.x,
+                    players[0].transform.position.y,
+                    transform.position.z);
+            }
+            if (players[1].conectflag)
+            {
+                this.downGravity = players[1].downGravity;
+                transform.position = new Vector3(
+                    players[1].transform.position.x,
+                    players[1].transform.position.y,
+                    transform.position.z);
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "DeadZone")

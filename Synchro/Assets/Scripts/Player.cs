@@ -15,27 +15,22 @@ public class Player : Character
     [HideInInspector]
     public bool isControll = true;
 
-    public void Controll(bool flag)
-    {
-        isControll = flag;
-    }
-
     [SerializeField]
     private Player partner;
 
-    [SerializeField]
-    private static Character child;
+    //private static Character child;
 
-    private static bool conectflag = false;
+    public bool conectflag;
 
-    public static bool conectFlag { get { return conectflag; } }
+    private LineRenderer _line;
+
     // Use this for initialization
     protected override void Start()
     {
         // キャラクターの初期化
         base.Start();
         gamepad = GameManager.Instance.gamePad;
-        transform.name = "stupid";
+        _line = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -70,41 +65,42 @@ public class Player : Character
             }
         }
 
-        //npcが間にいるか判定
-        if (!child)
+        // パートナーとの座標差分が一定内の場合に線描画を行うための処理
+        var dir = partner.transform.position - transform.position;
+        if ((dir.x >= -0.25F && dir.x <= 0.25F) && (dir.y >= -0.5F && dir.y <= 0.5F))
         {
             var dis = Vector3.Distance(transform.position, partner.transform.position);
-            var dir = partner.transform.position - transform.position;
 
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, dir, out hit, dis))
+            if(Physics.Raycast(transform.position, dir, out hit, dis))
             {
-                if (hit.transform.tag == "Child")
+                if(hit.transform.tag == "Child")
                 {
-                    child = hit.transform.gameObject.GetComponent<Character>();
+                    // NPCと接触した場合に成立
+                    _line.enabled = true;
+                    _line.SetPosition(0, transform.position);
+                    _line.SetPosition(1, hit.transform.position);
+                }
+                else
+                {
+                    // 接触していない場合に不成立
+                    _line.enabled = false;
                 }
             }
         }
-        if (child)
+        else
         {
-            //中間地点にnpcを移動させる
-            var vec = partner.transform.position - transform.position;
-
-            if ((vec.x <= -0.25F || vec.x >= 0.25F) || (vec.y <= -1F || vec.y >= 1F))
-            {
-                conectflag = false;
-                return;
-            }
-            conectflag = true;
-            vec = transform.position + vec / 2;
-            child.transform.position = new Vector3(vec.x, vec.y, child.transform.position.z);
-            child.GetComponent<Character>().downGravity = GetComponent<Character>().downGravity;
+            // 一定の差分外にいる場合も不成立にする
+            _line.enabled = false;
         }
+
+        // フラグが成立している場合のみ線を描画
+        conectflag = _line.enabled;
     }
 
     public override void Restart()
     {
-        child = null;
+        //child = null;
         base.Restart();
     }
 
