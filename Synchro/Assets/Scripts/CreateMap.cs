@@ -6,6 +6,9 @@ using System.IO;
 public class CreateMap : MonoBehaviour {
 
     [SerializeField]
+    private Character _spwanChild;
+
+    [SerializeField]
     private float _scaleing = 1F;
 
     [SerializeField]
@@ -37,7 +40,13 @@ public class CreateMap : MonoBehaviour {
                     // 位置座標の差分を加味してリソースを配置
                     var obj = Instantiate(_mapdate[integer], transform);
                     obj.transform.position = transform.position + sub;
-                    obj.transform.localScale = Vector3.one * _scaleing;
+                    obj.transform.localScale  *= _scaleing;
+
+                    if(integer == 1)
+                    {
+                        _spwanChild.transform.position = obj.transform.position;
+                        _spwanChild.respawn = _spwanChild.transform.position;
+                    }
                 }
                 sub.x += _scaleing * 1.25F;
             }

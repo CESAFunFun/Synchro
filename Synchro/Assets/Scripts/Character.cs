@@ -12,8 +12,13 @@ public class Character : MonoBehaviour {
 
     public float moveSpeed = 1F;
     public float jumpPower = 1F;
+
+    [HideInInspector]
     public bool isGround = false;
+    [HideInInspector]
     public bool downGravity = true;
+    [HideInInspector]
+    public Vector3 respawn;
 
     private const float G_POWER = 9.8F;
     private const float G_LENGTH = 1F;
@@ -21,7 +26,6 @@ public class Character : MonoBehaviour {
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
     private Vector3 _gravity;
-    private Vector3 _respawn;
 
     private bool _skyChange;
 
@@ -34,15 +38,16 @@ public class Character : MonoBehaviour {
         // 物理演算コンポーネントを取得して重力用の設定
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.useGravity = false;
+        _rigidbody.velocity = Vector3.zero;
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+        // 最初の位置を保存
+        respawn = transform.position;
 
         // 移動量の初期化
         _velocity = Vector3.zero;
         // 重力を上方向か下方向に設定
         _gravity = downGravity ? Vector3.down : Vector3.up;
-
-        // 最初の位置を保存しておく
-        _respawn = transform.position;
     }
 	
 	protected virtual void Update () {
@@ -84,7 +89,8 @@ public class Character : MonoBehaviour {
 
     public void ChangeGravity(bool isGround = false) {
         if (this.isGround)
-        {         // 一度だけ宙に浮かせて反転させる
+        {
+            // 一度だけ宙に浮かせて反転させる
             this.isGround = isGround;
             downGravity = !downGravity;
         }
@@ -109,11 +115,11 @@ public class Character : MonoBehaviour {
 
         if (transform.parent != null)
         {
-            transform.parent.position = _respawn;
+            transform.parent.position = respawn;
         }
         else
         {
-            transform.position = _respawn;
+            transform.position = respawn;
         }
 
         // このクラスの初期化処理を実行
@@ -132,14 +138,18 @@ public class Character : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Map")
         {
-            if (transform.position.y > collision.transform.position.y
+            // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
+            if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
+            {
+                if (transform.position.y > collision.transform.position.y
                 && _gravity == Vector3.down)
-                isGround = true;
-            else if (transform.position.y < collision.transform.position.y
-                && _gravity == Vector3.up)
-                isGround = true;
-            else
-                isGround = false;
+                    isGround = true;
+                else if (transform.position.y < collision.transform.position.y
+                    && _gravity == Vector3.up)
+                    isGround = true;
+                else
+                    isGround = false;
+            }
 
             //// オブジェクトに接触したら下方にレイを飛ばして接地を判定する
             //if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))

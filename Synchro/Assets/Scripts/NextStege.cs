@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class NextStege : MonoBehaviour {
 
-    void OnGUI()
+    private void Update()
     {
-        if (GUI.Button(new Rect(10, 10, 150, 100), "I am a button"))
+        if(GameManager.Instance.gamePad.startButton.trigger)
         {
             SceneManager.LoadScene("Select");
         }

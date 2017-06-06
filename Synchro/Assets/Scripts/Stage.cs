@@ -10,6 +10,9 @@ public class Stage : MonoBehaviour {
     private void Awake()
     {
         stageLevel = GameManager.Instance.mapLevel;
-        Debug.Log(stageLevel);
+    }
+    private void Start()
+    {
+
     }
 }

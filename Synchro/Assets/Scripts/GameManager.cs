@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
     {
         failObject.GetComponent<Character>().Restart();
     }
+
     private void OnGUI()
     {
         if (_isGoal)
