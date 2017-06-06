@@ -21,7 +21,7 @@ public class Character : MonoBehaviour {
     public Vector3 respawn;
 
     private const float G_POWER = 9.8F;
-    private const float G_LENGTH = 1F;
+    private const float G_LENGTH = 0.6F;
 
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
@@ -131,13 +131,7 @@ public class Character : MonoBehaviour {
         if (collision.gameObject.tag == "Map")
         {
             _skyChange = true;
-        }
-    }
 
-    protected virtual void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Map")
-        {
             // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
             if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
             {
@@ -161,6 +155,35 @@ public class Character : MonoBehaviour {
             //    isGround = false;
             //}
         }
+    }
+
+    protected virtual void OnCollisionStay(Collision collision)
+    {
+        //if (collision.gameObject.tag == "Map")
+        //{
+        //    // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
+        //    if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
+        //    {
+        //        if (transform.position.y > collision.transform.position.y
+        //        && _gravity == Vector3.down)
+        //            isGround = true;
+        //        else if (transform.position.y < collision.transform.position.y
+        //            && _gravity == Vector3.up)
+        //            isGround = true;
+        //        else
+        //            isGround = false;
+        //    }
+
+        //    //// オブジェクトに接触したら下方にレイを飛ばして接地を判定する
+        //    //if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
+        //    //{
+        //    //    isGround = true;
+        //    //}
+        //    //else
+        //    //{
+        //    //    isGround = false;
+        //    //}
+        //}
     }
 
     protected virtual void OnCollisionExit(Collision collision) {

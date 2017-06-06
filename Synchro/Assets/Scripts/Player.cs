@@ -20,6 +20,7 @@ public class Player : Character
 
     //private static Character child;
 
+    [HideInInspector]
     public bool conectflag;
 
     private LineRenderer _line;
