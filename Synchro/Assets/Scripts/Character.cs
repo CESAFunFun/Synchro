@@ -134,14 +134,18 @@ public class Character : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Map")
         {
-            if (transform.position.y > collision.transform.position.y
+            // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
+            if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
+            {
+                if (transform.position.y > collision.transform.position.y
                 && _gravity == Vector3.down)
-                isGround = true;
-            else if (transform.position.y < collision.transform.position.y
-                && _gravity == Vector3.up)
-                isGround = true;
-            else
-                isGround = false;
+                    isGround = true;
+                else if (transform.position.y < collision.transform.position.y
+                    && _gravity == Vector3.up)
+                    isGround = true;
+                else
+                    isGround = false;
+            }
 
             //// オブジェクトに接触したら下方にレイを飛ばして接地を判定する
             //if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))

@@ -6,10 +6,13 @@ using UnityEngine.SceneManagement;
 public class Cursor : MonoBehaviour
 {
     [SerializeField]
-    private int number = 8;
+    private int _number = 8;
 
     [SerializeField]
-    private string nextSceneName;
+    private float _speed = 1F;
+
+    [SerializeField]
+    private string _nextSceneName;
 
     [SerializeField]
     private Vector2 _lerpLength = Vector2.one;
@@ -45,7 +48,7 @@ public class Cursor : MonoBehaviour
                 _isLerp = false;
             }
 
-            _rectTransform.position = transform.position = Vector3.Lerp(_startPosition, _endPosition, diff / 1F);
+            _rectTransform.position = transform.position = Vector3.Lerp(_startPosition, _endPosition, diff / 1F * _speed);
         }
         else
         {
@@ -58,34 +61,33 @@ public class Cursor : MonoBehaviour
                 if (_gamepad.leftStick.x <= -1F)
                 {
                     _endPosition += Vector3.left * _lerpLength.x;
-                    number += -1;
+                    _number += -1;
                     _isLerp = true;
                 }
                 if (_gamepad.leftStick.x >= 1F)
                 {
                     _endPosition += Vector3.right * _lerpLength.x;
-                    number += +1;
+                    _number += +1;
                     _isLerp = true;
                 }
 
                 if (_gamepad.leftStick.y <= -1F)
                 {
                     _endPosition += Vector3.down * _lerpLength.y;
-                    number += +5;
+                    _number += +5;
                     _isLerp = true;
                 }
                 if (_gamepad.leftStick.y >= 1F)
                 {
                     _endPosition += Vector3.up * _lerpLength.y;
-                    number += -5;
+                    _number += -5;
                     _isLerp = true;
                 }
 
                 if (_gamepad.startButton.trigger)
                 {
-                    Debug.Log("Start");
-                    GameManager.Instance.mapLevel = number;
-                    SceneManager.LoadScene(nextSceneName);
+                    GameManager.Instance.mapLevel = _number;
+                    SceneManager.LoadScene(_nextSceneName);
                 }
             }
         }

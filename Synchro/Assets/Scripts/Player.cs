@@ -28,6 +28,8 @@ public class Player : Character
 
     private static bool conectflag = false;
 
+    private LineRenderer _conectLine;
+
     public static bool conectFlag { get { return conectflag; } }
     // Use this for initialization
     protected override void Start()
@@ -35,7 +37,7 @@ public class Player : Character
         // キャラクターの初期化
         base.Start();
         gamepad = GameManager.Instance.gamePad;
-        transform.name = "stupid";
+        _conectLine = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -70,6 +72,10 @@ public class Player : Character
             }
         }
 
+        // プレイヤーとNPCをつなぐ
+        _conectLine.SetPosition(0, transform.position);
+        _conectLine.SetPosition(1, child.transform.position);
+
         //npcが間にいるか判定
         if (!child)
         {
@@ -85,12 +91,12 @@ public class Player : Character
                 }
             }
         }
-        if (child)
+        else
         {
             //中間地点にnpcを移動させる
             var vec = partner.transform.position - transform.position;
 
-            if ((vec.x <= -0.25F || vec.x >= 0.25F) || (vec.y <= -1F || vec.y >= 1F))
+            if ((vec.x <= -0.5F || vec.x >= 0.5F) || (vec.y <= -0.5F || vec.y >= 0.5F))
             {
                 conectflag = false;
                 return;
