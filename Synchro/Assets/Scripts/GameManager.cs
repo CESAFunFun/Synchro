@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
 
     public int mapLevel = 1;
 
+    [SerializeField]
+    private GameObject[] obj;
+
     private void Awake()
     {
 
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update() {
+
         if(_isGoal)
         {
             // クリアしたらSelectへ遷移
@@ -54,6 +58,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene("Select");
             }
         }
+        Pose();
     }
 
     private void isClear()
@@ -71,6 +76,28 @@ public class GameManager : MonoBehaviour
         {
             //if (GUI.Button(new Rect(Screen.width / 2, 100, 450, 100), "Clear"))
             GUI.TextArea(new Rect(Screen.width / 2F, Screen.height / 2F, 75, 50), "Clear!");
+        }
+    }
+
+    private void Pose()
+    {
+        if(gamePad.startButton.down)
+        {
+            for(int i=0;i<obj.Length;i++)
+            {
+                if (i <2)
+                {
+                    obj[i].GetComponent<Player>().enabled = !obj[i].GetComponent<Player>().enabled;
+                    obj[i].GetComponent<Rigidbody>().isKinematic = !obj[i].GetComponent<Rigidbody>().isKinematic;
+                }
+                else if(i==2)
+                {
+                    obj[i].GetComponent<Rigidbody>().isKinematic = !obj[i].GetComponent<Rigidbody>().isKinematic;
+                    obj[i].GetComponent<Child>().enabled = !obj[i].GetComponent<Child>().enabled;
+                }
+                else
+                    obj[i].GetComponent<LinkedPlayer>().enabled = !obj[i].GetComponent<LinkedPlayer>().enabled;
+            }
         }
     }
 
