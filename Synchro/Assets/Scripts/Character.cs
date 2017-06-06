@@ -135,14 +135,11 @@ public class Character : MonoBehaviour {
             // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
             if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
             {
-                if (transform.position.y > collision.transform.position.y
-                && _gravity == Vector3.down)
-                    isGround = true;
-                else if (transform.position.y < collision.transform.position.y
-                    && _gravity == Vector3.up)
-                    isGround = true;
-                else
-                    isGround = false;
+                isGround = true;
+            }
+            else
+            {
+                isGround = false;
             }
 
             //// オブジェクトに接触したら下方にレイを飛ばして接地を判定する
@@ -159,20 +156,22 @@ public class Character : MonoBehaviour {
 
     protected virtual void OnCollisionStay(Collision collision)
     {
-        //if (collision.gameObject.tag == "Map")
-        //{
-        //    // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
-        //    if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
-        //    {
-        //        if (transform.position.y > collision.transform.position.y
-        //        && _gravity == Vector3.down)
-        //            isGround = true;
-        //        else if (transform.position.y < collision.transform.position.y
-        //            && _gravity == Vector3.up)
-        //            isGround = true;
-        //        else
-        //            isGround = false;
-        //    }
+        if (collision.gameObject.tag == "Map")
+        {
+
+            // オブジェクトに接触したら下方にレイを飛ばして接地を判定する
+            if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
+            {
+                if (transform.position.y > collision.transform.position.y
+                    && _gravity == Vector3.down)
+                    isGround = true;
+                else if (transform.position.y < collision.transform.position.y
+                    && _gravity == Vector3.up)
+                    isGround = true;
+                else
+                    isGround = false;
+            }
+        }
 
         //    //// オブジェクトに接触したら下方にレイを飛ばして接地を判定する
         //    //if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))

@@ -68,7 +68,7 @@ public class Player : Character
         
         // パートナーとの座標差分が一定内の場合に線描画を行うための処理
         var dir = partner.transform.position - transform.position;
-        if ((dir.x >= -0.25F && dir.x <= 0.25F) && (dir.y >= -0.5F && dir.y <= 0.5F))
+        if ((dir.x >= -0.5F && dir.x <= 0.5F) && (dir.y >= -0.5F && dir.y <= 0.5F))
         {
             var dis = Vector3.Distance(transform.position, partner.transform.position);
 
