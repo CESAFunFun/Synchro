@@ -36,12 +36,18 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Find();
         //gamePad = GetComponent<Gamepad>();
     }
 
     private void Update() {
 
-        if(_isGoal)
+        if (obj[0] == null)
+            Find();
+
+
+
+        if (_isGoal)
         {
             // クリアしたらSelectへ遷移
             if (gamePad.startButton.trigger)
@@ -57,8 +63,12 @@ public class GameManager : MonoBehaviour
             {
                 SceneManager.LoadScene("Select");
             }
+            //ポーズ
+            if (Application.loadedLevelName == "Play")
+            {
+                Pose();
+            }
         }
-        Pose();
     }
 
     private void isClear()
@@ -79,14 +89,21 @@ public class GameManager : MonoBehaviour
             GUI.TextArea(new Rect(Screen.width / 2F, Screen.height / 2F, 75, 50), "Clear!");
         }
     }
+    public void Find()
+    {
+        obj[0] = GameObject.Find("Player1");
+        obj[1] = GameObject.Find("Player2");
+        obj[2] = GameObject.Find("Child");
+        obj[3] = GameObject.Find("LineRenderer");
+    }
 
     private void Pose()
     {
-        if(gamePad.startButton.down)
+        if(gamePad.startButton.trigger)
         {
             for(int i=0;i<obj.Length;i++)
             {
-                if (i <2)
+                if (i < 2)
                 {
                     obj[i].GetComponent<Player>().enabled = !obj[i].GetComponent<Player>().enabled;
                     obj[i].GetComponent<Rigidbody>().isKinematic = !obj[i].GetComponent<Rigidbody>().isKinematic;
