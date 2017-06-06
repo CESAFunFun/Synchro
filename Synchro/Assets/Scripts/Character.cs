@@ -12,11 +12,13 @@ public class Character : MonoBehaviour {
 
     public float moveSpeed = 1F;
     public float jumpPower = 1F;
-    public bool isGround = false;
-    public bool downGravity = true;
 
     [HideInInspector]
-    public Vector3 _respawn;
+    public bool isGround = false;
+    [HideInInspector]
+    public bool downGravity = true;
+    [HideInInspector]
+    public Vector3 respawn;
 
     private const float G_POWER = 9.8F;
     private const float G_LENGTH = 1F;
@@ -36,15 +38,16 @@ public class Character : MonoBehaviour {
         // 物理演算コンポーネントを取得して重力用の設定
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.useGravity = false;
+        _rigidbody.velocity = Vector3.zero;
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+        // 最初の位置を保存
+        respawn = transform.position;
 
         // 移動量の初期化
         _velocity = Vector3.zero;
         // 重力を上方向か下方向に設定
         _gravity = downGravity ? Vector3.down : Vector3.up;
-
-        // 最初の位置を保存しておく
-        _respawn = transform.position;
     }
 	
 	protected virtual void Update () {
@@ -86,7 +89,8 @@ public class Character : MonoBehaviour {
 
     public void ChangeGravity(bool isGround = false) {
         if (this.isGround)
-        {         // 一度だけ宙に浮かせて反転させる
+        {
+            // 一度だけ宙に浮かせて反転させる
             this.isGround = isGround;
             downGravity = !downGravity;
         }
@@ -111,11 +115,11 @@ public class Character : MonoBehaviour {
 
         if (transform.parent != null)
         {
-            transform.parent.position = _respawn;
+            transform.parent.position = respawn;
         }
         else
         {
-            transform.position = _respawn;
+            transform.position = respawn;
         }
 
         // このクラスの初期化処理を実行

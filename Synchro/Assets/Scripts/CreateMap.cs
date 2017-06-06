@@ -45,7 +45,7 @@ public class CreateMap : MonoBehaviour {
                     if(integer == 1)
                     {
                         _spwanChild.transform.position = obj.transform.position;
-                        _spwanChild._respawn = _spwanChild.transform.position;
+                        _spwanChild.respawn = _spwanChild.transform.position;
                     }
                 }
                 sub.x += _scaleing * 1.25F;
