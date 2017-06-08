@@ -31,7 +31,7 @@ public class CreateMap : MonoBehaviour {
         Vector3 sub = Vector3.zero;
 
         // テキストからマップデータを読み込み
-        StringReader reader = new StringReader(_mapchip[stage.stageLevel - 1].text);
+        StringReader reader = new StringReader(_mapchip[stage.stageLevel].text);
         while (reader.Peek() > -1)
         {
             // カンマ区切りで読み込んで行ごとにマップを作成
