@@ -168,8 +168,10 @@ public class Character : MonoBehaviour {
                 else if (transform.position.y < collision.transform.position.y
                     && _gravity == Vector3.up)
                     isGround = true;
-                else
-                    isGround = false;
+            }
+            else
+            {
+                isGround = false;
             }
         }
 

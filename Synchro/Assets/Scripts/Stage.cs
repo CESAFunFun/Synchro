@@ -7,6 +7,12 @@ public class Stage : MonoBehaviour {
     public int stageLevel;
     public GameObject[] stageObjects;
 
+    public bool useJump = false;
+    public bool usePlayerChanger = false;
+    public bool useGravity = false;
+    public bool usePlayerFloorFlip = false;
+
+
     private void Awake()
     {
         stageLevel = GameManager.Instance.mapLevel;
