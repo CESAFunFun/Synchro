@@ -7,17 +7,22 @@ public class Child : Character {
     [SerializeField]
     private Player[] players;
 
+    private Gamepad gamepad;
+    
     // Use this for initialization
     protected override void Start () {
         base.Start();
-	}
+        gamepad = GameManager.Instance.gamePad;
+    }
 
     protected override void Update()
     {
         base.Update();
 
-        if(players[0].conectflag && players[1].conectflag)
+        if (players[0].conectflag && players[1].conectflag)
         {
+            
+
             if (players[0].conectflag)
             {
                 this.downGravity = players[0].downGravity;
@@ -34,8 +39,17 @@ public class Child : Character {
                     players[1].transform.position.y,
                     transform.position.z);
             }
+
+            if(gamepad.leftButton.down)
+            {
+                BlinkPosition();
+            }
         }
+
+
+        
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
