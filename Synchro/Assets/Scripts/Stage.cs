@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour {
 
+    [HideInInspector]
     public int stageLevel;
     public GameObject[] stageObjects;
-
-    public bool useJump = false;
-    public bool usePlayerChanger = false;
-    public bool useGravity = false;
-    public bool usePlayerFloorFlip = false;
-
 
     private void Awake()
     {

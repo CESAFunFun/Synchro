@@ -6,10 +6,7 @@ using System.IO;
 public class CreateMap : MonoBehaviour {
 
     [SerializeField]
-    private Character _spwanChild;
-
-    [SerializeField]
-    private GameObject _spwanPlayer;
+    private Character _character;
 
     [SerializeField]
     private float _scaleing = 1F;
@@ -38,28 +35,13 @@ public class CreateMap : MonoBehaviour {
             string line = reader.ReadLine();
             string[] values = line.Split(',');
 
-            //１行目
-            if (i == 0)
+            //１行目のみ
+            if (i++ == 0)
             {
-                if (values[0] == "1")
-                {
-                    transform.parent.GetComponent<Stage>().useJump = true;
-                }
-                if (values[1] == "1")
-                {
-                    transform.parent.GetComponent<Stage>().usePlayerChanger = true;
-                }
-                if (values[2] == "1")
-                {
-                    transform.parent.GetComponent<Stage>().useGravity = true;
-                }
-                if (values[3] == "1")
-                {
-                    transform.parent.GetComponent<Stage>().usePlayerFloorFlip = true;
-                }
-
-
-                i++;
+                _character.canJump = (values[0] == "0") ? false : true;
+                //_character.canChange = (values[1] == "0") ? false : true;
+                _character.canGravity = (values[2] == "0") ? false : true;
+                _character.canBlink = (values[3] == "0") ? false : true;
             }
             else
             {
@@ -77,8 +59,8 @@ public class CreateMap : MonoBehaviour {
 
                         if(integer == 1)
                         {
-                            _spwanChild.transform.position = obj.transform.position;
-                            _spwanChild.respawn = _spwanChild.transform.position;
+                            _character.transform.position = obj.transform.position;
+                            _character.respawn = _character.transform.position;
                         }
                     }
                     sub.x += _scaleing * 1.25F;
