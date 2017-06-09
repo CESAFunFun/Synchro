@@ -30,7 +30,7 @@ public class Player : Character
     {
         // キャラクターの初期化
         base.Start();
-        gamepad = GameManager.Instance.gamePad;
+        gamepad = GameController.Instance.gamepad;
         _line = GetComponent<LineRenderer>();
     }
 

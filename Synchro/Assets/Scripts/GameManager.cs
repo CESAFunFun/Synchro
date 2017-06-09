@@ -6,38 +6,20 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [HideInInspector]
-    public Gamepad gamePad;
+    public Gamepad gamepad;
 
     private bool _isGoal = false;
-
-    private static GameManager instance;
-
-    public static GameManager Instance { get { return instance; } }
 
     public int mapLevel = 1;
 
     [SerializeField]
     private GameObject[] obj;
-
-    private void Awake()
-    {
-
-        gamePad = GetComponent<Gamepad>();
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
+    
 
     private void Start()
     {
         Find();
-        //gamePad = GetComponent<Gamepad>();
+        gamepad = GameController.Instance.gamepad;
     }
 
     private void Update() {
@@ -50,7 +32,7 @@ public class GameManager : MonoBehaviour
         if (_isGoal)
         {
             // クリアしたらSelectへ遷移
-            if (gamePad.startButton.trigger)
+            if (gamepad.startButton.trigger)
             {
                 _isGoal = false;
                 SceneManager.LoadScene("Select");
@@ -59,7 +41,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // デバック用にSelectへ遷移
-            if (gamePad.backButton.trigger)
+            if (gamepad.backButton.trigger)
             {
                 SceneManager.LoadScene("Select");
             }
@@ -99,7 +81,7 @@ public class GameManager : MonoBehaviour
 
     private void Pose()
     {
-        if(gamePad.startButton.trigger)
+        if(gamepad.startButton.trigger)
         {
             for(int i=0;i<obj.Length;i++)
             {

@@ -20,7 +20,7 @@ public class CameraWork : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _gamepad = GameManager.Instance.gamePad;
+        _gamepad = GameController.Instance.gamepad;
         _angle = 0F;
         _side = Vector2.zero;
         _sideMax = Vector2.zero;

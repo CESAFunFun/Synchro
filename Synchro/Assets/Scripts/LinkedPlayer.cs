@@ -24,7 +24,7 @@ public class LinkedPlayer : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        gamepad = GameManager.Instance.gamePad;
+        gamepad = GameController.Instance.gamepad;
         //renderer = GetComponent<LineRenderer>();
     }
 

@@ -10,7 +10,7 @@ public class Stage : MonoBehaviour {
 
     private void Awake()
     {
-        stageLevel = GameManager.Instance.mapLevel;
+        stageLevel = GameObject.Find("GameManager").GetComponent<GameManager>().mapLevel;
     }
     private void Start()
     {

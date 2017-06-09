@@ -21,16 +21,13 @@ public class CameraMove : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        _gamepad = GameManager.Instance.gamePad;
+        _gamepad = GameController.Instance.gamepad;
         _startPosition = transform.position;
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-        if(_gamepad==null)
-            _gamepad = _gamepad = GameManager.Instance.gamePad;
-
+        
         if (_gamepad.rightStickPress.trigger)
         {
             // アクティブとなっていない方のカメラに切り替える
@@ -45,7 +42,7 @@ public class CameraMove : MonoBehaviour {
             //左端までしか移動できないようにする
             if (transform.position.x > minimum.x)
             {
-                if (_mainCamera.gameObject.active)
+                if (_mainCamera.gameObject.activeSelf)
                     move.x = -speed;
                 else
                     move.x = speed;
@@ -56,7 +53,7 @@ public class CameraMove : MonoBehaviour {
         {
             if (transform.position.x < maximum.x)
             {
-                if (_mainCamera.gameObject.active)
+                if (_mainCamera.gameObject.activeSelf)
                     move.x = speed;
                 else
                     move.x = -speed;

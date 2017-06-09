@@ -9,7 +9,7 @@ public class NextStege : MonoBehaviour {
     private string _sceneName;
     private void Update()
     {
-        if(GameManager.Instance.gamePad.startButton.trigger)
+        if(GameController.Instance.gamepad.startButton.trigger)
         {
             SceneManager.LoadScene(_sceneName);
         }
