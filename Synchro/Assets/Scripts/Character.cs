@@ -20,6 +20,15 @@ public class Character : MonoBehaviour {
     [HideInInspector]
     public Vector3 respawn;
 
+    [HideInInspector]
+    public bool canJump;
+    [HideInInspector]
+    public bool canChange;
+    [HideInInspector]
+    public bool canGravity;
+    [HideInInspector]
+    public bool canBlink;
+
     private const float G_POWER = 9.8F;
     private const float G_LENGTH = 0.6F;
 
@@ -77,6 +86,9 @@ public class Character : MonoBehaviour {
     }
 
     public void Jump(float power) {
+        // マップによりジャンプ不可
+        if (!canJump) return;
+
         // 接地していた場合のみ
         if (isGround)
         {
@@ -87,27 +99,35 @@ public class Character : MonoBehaviour {
         }
     }
 
-    public void ChangeGravity(bool isGround = false) {
-        if (this.isGround)
+    public void ChangeGravity() {
+        // マップにより反転不可
+        if (!canGravity) return;
+
+        if (isGround)
         {
             // 一度だけ宙に浮かせて反転させる
-            this.isGround = isGround;
+            isGround = false;
             downGravity = !downGravity;
         }
         else if(_skyChange)
         {
-            this.isGround = isGround;
+            isGround = false;
             downGravity = !downGravity;
             _skyChange = false;
         }
     }
 
-    public void BlinkPosition()
-    {
-        // 位置を入れ替えるための原点（重力の原点）
-        var point = transform.position + _gravity;
-        transform.RotateAround(point, Vector3.left, 180F);
-        ChangeGravity(true);
+    public void BlinkPosition() {
+        // マップにより切り替え不可
+        if (!canBlink) return;
+
+        if (isGround)
+        {
+            // 位置を入れ替えるための原点（重力の原点）
+            var point = transform.position + _gravity;
+            transform.RotateAround(point, Vector3.left, 180F);
+            downGravity = !downGravity;
+        }
     }
 
     public virtual void Restart() {

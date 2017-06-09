@@ -60,10 +60,7 @@ public class Player : Character
         // 足場反転処理
         if (gamepad.leftButton.trigger)
         {
-            if (isGround)
-            {
-                BlinkPosition();
-            }
+            BlinkPosition();
         }
         
         // パートナーとの座標差分が一定内の場合に線描画を行うための処理
