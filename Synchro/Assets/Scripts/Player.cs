@@ -18,7 +18,7 @@ public class Player : Character
     [SerializeField]
     private Player partner;
 
-    //private static Character child;
+    private static Character _child;
 
     [HideInInspector]
     public bool conectflag;
@@ -44,7 +44,9 @@ public class Player : Character
         if (!isControll) return;
 
         // 移動処理
-        Move(new Vector3(gamepad.leftStick.x, 0F, 0F), moveSpeed);
+        var moveX = gamepad.leftStick.x;
+        moveX *= (CameraMove.FrontBack) ? 1F : -1F;
+        Move(new Vector3(moveX, 0F, 0F), moveSpeed);
 
         // ジャンプ処理
         if (gamepad.buttonA.down)
@@ -62,50 +64,102 @@ public class Player : Character
         {
             BlinkPosition();
         }
-        
-        // パートナーとの座標差分が一定内の場合に線描画を行うための処理
-        var dir = partner.transform.position - transform.position;
-        if ((dir.x >= -0.5F && dir.x <= 0.5F) && (dir.y >= -0.5F && dir.y <= 0.5F))
-        {
-            var dis = Vector3.Distance(transform.position, partner.transform.position);
 
-            RaycastHit hit;
-            if(Physics.Raycast(transform.position, dir, out hit, dis))
+        // パートナーとの座標差分が一定内の場合に線描画を行うための処理
+        SetLine(partner.transform.position - transform.position);
+    }
+
+    void SetLine(Vector3 direction)
+    {
+        Debug.Log(direction);
+        if(!_child)
+        {
+            if ((direction.x >= -0.5F && direction.x <= 0.5F) && (direction.y >= -0.5F && direction.y <= 0.5F))
             {
-                if(hit.transform.tag == "Child")
+                var dis = Vector3.Distance(transform.position, partner.transform.position);
+
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, direction, out hit, dis))
                 {
-                    // NPCと接触した場合に成立
-                    _line.enabled = true;
-                    _line.SetPosition(0, transform.position);
-                    _line.SetPosition(1, hit.transform.position);
-                }
-                else
-                {
-                    // 接触していない場合に不成立
-                    _line.enabled = false;
+                    if (hit.transform.tag == "Child")
+                    {
+                        // NPCと接触した場合に成立
+                        _line.enabled = true;
+                        _child = hit.transform.GetComponent<Child>();
+                    }
+                    else
+                    {
+                        // 接触していない場合に不成立
+                        _line.enabled = false;
+                    }
                 }
             }
+            else
+            {
+                // 一定の差分外にいる場合も不成立にする
+                _line.enabled = false;
+            }
         }
-        else
+
+        if(_child)
         {
-            // 一定の差分外にいる場合も不成立にする
-            _line.enabled = false;
+            if (conectflag && partner.conectflag)
+            {
+                // 子供との線をつなげる
+                _line.SetPosition(0, transform.position);
+                _line.SetPosition(1, _child.transform.position);
+
+                // 子供と自分の座標等を近似させる
+                _child.downGravity = downGravity;
+                _child.transform.position = new Vector3(
+                    transform.position.x,
+                    transform.position.y,
+                    _child.transform.position.z);
+            }
         }
+
+        //if ((direction.x >= -0.5F && direction.x <= 0.5F) && (direction.y >= -0.5F && direction.y <= 0.5F))
+        //{
+        //    var dis = Vector3.Distance(transform.position, partner.transform.position);
+        //
+        //    RaycastHit hit;
+        //    if (Physics.Raycast(transform.position, direction, out hit, dis))
+        //    {
+        //        if (hit.transform.tag == "Child")
+        //        {
+        //            // NPCと接触した場合に成立
+        //            _line.enabled = true;
+        //            _line.SetPosition(0, transform.position);
+        //            _line.SetPosition(1, hit.transform.position);
+        //
+        //            // XXX : 間を連行できない＞＜
+        //            hit.transform.position = new Vector3(
+        //                transform.position.x,
+        //                transform.position.y,
+        //                hit.transform.position.z);
+        //        }
+        //        else
+        //        {
+        //            // 接触していない場合に不成立
+        //            _line.enabled = false;
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    // 一定の差分外にいる場合も不成立にする
+        //    _line.enabled = false;
+        //}
 
         // フラグが成立している場合のみ線を描画
         conectflag = _line.enabled;
-    }
-
-    public override void Restart()
-    {
-        //child = null;
-        base.Restart();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "DeadZone")
         {
+            _child = null;
             Restart();
             partner.Restart();
             conectflag = false;
