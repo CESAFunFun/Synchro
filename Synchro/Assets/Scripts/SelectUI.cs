@@ -10,6 +10,7 @@ public class SelectUI : MonoBehaviour {
     [SerializeField]
     float _speed;
 
+    [SerializeField]
     bool _rotFlag;
 
     public bool RotFlag { set { _rotFlag = value; } }
