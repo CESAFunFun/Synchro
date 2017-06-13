@@ -27,7 +27,7 @@ public class Cursor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _gamepad = GameManager.Instance.gamePad;
+        _gamepad = GameController.Instance.gamepad;
         _rectTransform = GetComponent<RectTransform>();
         _isLerp = false;
         _startPosition = transform.position;
@@ -55,7 +55,7 @@ public class Cursor : MonoBehaviour
             _startTime = Time.timeSinceLevelLoad;
             _startPosition = _rectTransform.position;
             if (_gamepad == null)
-                _gamepad = GameManager.Instance.gamePad;
+                _gamepad = GameController.Instance.gamepad;
             else
             {
                 if (_gamepad.leftStick.x <= -1F)
@@ -86,7 +86,7 @@ public class Cursor : MonoBehaviour
 
                 if (_gamepad.startButton.trigger)
                 {
-                    GameManager.Instance.mapLevel = _number;
+                    //GameManager.Instance.mapLevel = _number;
                     SceneManager.LoadScene("Play");
                 }
             }

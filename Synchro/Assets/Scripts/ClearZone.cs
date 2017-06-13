@@ -9,7 +9,7 @@ public class ClearZone : MonoBehaviour
     {
         if (other.tag == "Child")
         {
-            GameManager.Instance.SendMessage("isClear");
+            GameObject.Find("GaemManager").SendMessage("isClear");
         }
     }
 }

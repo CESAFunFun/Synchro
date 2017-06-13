@@ -4,21 +4,40 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour {
 
-    public int stageLevel;
-    public GameObject[] stageObjects;
+    [SerializeField]
+    private GameObject[] stageObjects;
 
-    public bool useJump = false;
-    public bool usePlayerChanger = false;
-    public bool useGravity = false;
-    public bool usePlayerFloorFlip = false;
+    [SerializeField]
+    private float scaling = 1F;
 
+    private int _oldLevel = -1;
 
-    private void Awake()
-    {
-        stageLevel = GameManager.Instance.mapLevel;
+    private void Start() {
+        // 最初にマップのオブジェクトと大きさを設定
+        for(var num = 0; num < transform.childCount; num++)
+        {
+            var child = transform.GetChild(num).GetComponent<CreateMap>();
+            child.mapdate = stageObjects;
+            child.scaling = scaling;
+        }
     }
-    private void Start()
-    {
 
+    private void Update() {
+        // 静的なクラスからレベルを取得
+        var level = GameController.Instance.mapLevel;
+
+        // 前フレームと同じなら以下の処理を省略
+        if (level == _oldLevel) return;
+
+        // マップを一度削除してから生成する
+        for (var num = 0; num < transform.childCount; num++)
+        {
+            var map = transform.GetChild(num).GetComponent<CreateMap>();
+            map.Remove();
+            map.Make(level);
+        }
+
+        // 書き換えが一度きりになるように設定
+        _oldLevel = level;
     }
 }

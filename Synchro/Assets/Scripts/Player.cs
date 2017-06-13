@@ -18,10 +18,10 @@ public class Player : Character
     [SerializeField]
     private Player partner;
 
-    //private static Character child;
+    private Character _child;
 
     [HideInInspector]
-    public bool conectflag;
+    public bool conectflag = false;
 
     private LineRenderer _line;
 
@@ -30,8 +30,9 @@ public class Player : Character
     {
         // キャラクターの初期化
         base.Start();
-        gamepad = GameManager.Instance.gamePad;
+        gamepad = GameController.Instance.gamepad;
         _line = GetComponent<LineRenderer>();
+        _child = null;
     }
 
     // Update is called once per frame
@@ -44,7 +45,9 @@ public class Player : Character
         if (!isControll) return;
 
         // 移動処理
-        Move(new Vector3(gamepad.leftStick.x, 0F, 0F), moveSpeed);
+        var moveX = gamepad.leftStick.x;
+        moveX *= (CameraMove.FrontBack) ? 1F : -1F;
+        Move(new Vector3(moveX, 0F, 0F), moveSpeed);
 
         // ジャンプ処理
         if (gamepad.buttonA.down)
@@ -60,55 +63,66 @@ public class Player : Character
         // 足場反転処理
         if (gamepad.leftButton.trigger)
         {
-            if (isGround)
-            {
-                BlinkPosition();
-            }
+            BlinkPosition();
         }
-        
-        // パートナーとの座標差分が一定内の場合に線描画を行うための処理
-        var dir = partner.transform.position - transform.position;
-        if ((dir.x >= -0.5F && dir.x <= 0.5F) && (dir.y >= -0.5F && dir.y <= 0.5F))
-        {
-            var dis = Vector3.Distance(transform.position, partner.transform.position);
 
-            RaycastHit hit;
-            if(Physics.Raycast(transform.position, dir, out hit, dis))
+        // パートナーとの座標差分が一定内の場合に線描画を行うための処理
+        ConectLine(partner.transform.position - transform.position);
+    }
+
+    private void ConectLine(Vector3 direction)
+    {
+        // パートナーとの一定範囲内ならば処理を開始する
+        if((direction.x >= -(transform.localScale.x / 2F) * 05F && direction.x <= (transform.localScale.x / 2F) * 05F
+         && direction.y >= -(transform.localScale.y / 2F) * 18F && direction.y <= (transform.localScale.y / 2F) * 18F))
+        {
+            // 子要素を見つけるためにRaycastを行う
+            if(!_child)
             {
-                if(hit.transform.tag == "Child")
+                RaycastHit hit;
+                var dis = Vector3.Distance(transform.position, partner.transform.position);
+                if(Physics.Raycast(transform.position, direction, out hit, dis))
                 {
-                    // NPCと接触した場合に成立
-                    _line.enabled = true;
-                    _line.SetPosition(0, transform.position);
-                    _line.SetPosition(1, hit.transform.position);
+                    if(hit.transform.tag == "Child")
+                    {
+                        _child = hit.transform.GetComponent<Child>();
+                    }
                 }
-                else
+            }
+
+            // 子要素を見つけたら線をつなげる
+            if(_child && isControll)
+            {
+                conectflag = true;
+                _line.SetPosition(0, transform.position);
+                _line.SetPosition(1, _child.transform.position);
+
+                // パートナーとつながっていたら移動処理
+                if(partner.conectflag && partner.isControll)
                 {
-                    // 接触していない場合に不成立
-                    _line.enabled = false;
+                    var sub = transform.position + direction / 2F;
+                    _child.downGravity = downGravity;
+                    _child.transform.position = new Vector3(
+                        sub.x, sub.y, _child.transform.position.z);
                 }
             }
         }
         else
         {
-            // 一定の差分外にいる場合も不成立にする
-            _line.enabled = false;
+            // 一定範囲の外なので処理をしない
+            _child = null;
+            conectflag = false;
         }
 
-        // フラグが成立している場合のみ線を描画
-        conectflag = _line.enabled;
-    }
-
-    public override void Restart()
-    {
-        //child = null;
-        base.Restart();
+        // 繋がっていたら描画を有効化
+        _line.enabled = conectflag;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "DeadZone")
         {
+            _child = null;
             Restart();
             partner.Restart();
             conectflag = false;
