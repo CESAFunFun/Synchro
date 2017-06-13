@@ -161,16 +161,6 @@ public class Character : MonoBehaviour {
             {
                 isGround = false;
             }
-
-            //// オブジェクトに接触したら下方にレイを飛ばして接地を判定する
-            //if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
-            //{
-            //    isGround = true;
-            //}
-            //else
-            //{
-            //    isGround = false;
-            //}
         }
     }
 
@@ -194,17 +184,6 @@ public class Character : MonoBehaviour {
                 isGround = false;
             }
         }
-
-        //    //// オブジェクトに接触したら下方にレイを飛ばして接地を判定する
-        //    //if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
-        //    //{
-        //    //    isGround = true;
-        //    //}
-        //    //else
-        //    //{
-        //    //    isGround = false;
-        //    //}
-        //}
     }
 
     protected virtual void OnCollisionExit(Collision collision) {

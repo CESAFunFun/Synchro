@@ -21,6 +21,7 @@ public class CreateMap : MonoBehaviour {
     public void Make(int stageLevel) {
         int row = 0;
         Vector3 sub = Vector3.zero;
+        _character.Restart();
 
         // テキストからマップデータを読み込み
         StringReader reader = new StringReader(_mapchip[stageLevel].text);

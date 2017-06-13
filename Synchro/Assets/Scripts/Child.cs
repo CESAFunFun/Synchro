@@ -8,59 +8,12 @@ public class Child : Character {
     private Player[] players;
 
     private Gamepad gamepad;
-    
-    // Use this for initialization
-    protected override void Start () {
-        base.Start();
-        gamepad = GameManager.Instance.gamePad;
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
-        if (players[0].conectflag && players[1].conectflag)
-        {
-            
-
-            if (players[0].conectflag)
-            {
-                this.downGravity = players[0].downGravity;
-                transform.position = new Vector3(
-                    players[0].transform.position.x,
-                    players[0].transform.position.y,
-                    transform.position.z);
-            }
-            if (players[1].conectflag)
-            {
-                this.downGravity = players[1].downGravity;
-                transform.position = new Vector3(
-                    players[1].transform.position.x,
-                    players[1].transform.position.y,
-                    transform.position.z);
-            }
-
-            if(gamepad.leftButton.down)
-            {
-                BlinkPosition();
-            }
-        }
-
-
-        
-    }
-
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "DeadZone")
         {
-            Restart();
-
-            for(int i=0;i<players.Length;i++)
-            {
-                players[i].Restart();
-            }
+            GameObject.Find("GameManager").SendMessage("Fail");
         }
     }
 }
