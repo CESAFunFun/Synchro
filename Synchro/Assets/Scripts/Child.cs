@@ -8,11 +8,13 @@ public class Child : Character {
     private Player[] players;
 
     private Gamepad gamepad;
-    
+    private float rot = 0;
+    private ParticleSystem par;
     // Use this for initialization
     protected override void Start () {
         base.Start();
-        gamepad = GameManager.Instance.gamePad;
+        gamepad = GameController.Instance.gamepad;
+        par = transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
     }
 
     protected override void Update()
@@ -44,7 +46,14 @@ public class Child : Character {
             {
                 BlinkPosition();
             }
+            rot += 0.5f;
         }
+        else
+        {
+            rot = 0;
+        }
+
+        par.startRotation = rot;
 
 
         
