@@ -19,6 +19,10 @@ public class CameraMove : MonoBehaviour {
     [SerializeField]
     private Camera _subCamera;
 
+    private static bool frontback = true;
+    [HideInInspector]
+    public static bool FrontBack { get { return frontback; } }
+
     // Use this for initialization
     void Start () {
         _gamepad = GameController.Instance.gamepad;
@@ -32,6 +36,7 @@ public class CameraMove : MonoBehaviour {
         {
             // アクティブとなっていない方のカメラに切り替える
             ChangeDisplay(!_mainCamera.gameObject.activeSelf);
+            frontback = !frontback;
         }
 
         Vector3 move = Vector3.zero;
