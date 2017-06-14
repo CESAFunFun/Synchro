@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class SelectManager : MonoBehaviour {
 
     [SerializeField]
@@ -55,6 +55,15 @@ public class SelectManager : MonoBehaviour {
                 _stagenum[_number].RotFlag = true;
                 _curremtTime = 0;
             }
+
+            if(_gamepad.startButton.trigger)
+            {
+                GameController.Instance.mapLevel = _number + 1;
+                SceneManager.LoadScene("Play");
+            }
+
+
+
         }
 
 

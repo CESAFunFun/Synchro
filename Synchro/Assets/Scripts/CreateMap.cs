@@ -21,6 +21,7 @@ public class CreateMap : MonoBehaviour {
     public void Make(int stageLevel) {
         int row = 0;
         Vector3 sub = Vector3.zero;
+        if(_character != null) _character.Restart();
 
         // テキストからマップデータを読み込み
         StringReader reader = new StringReader(_mapchip[stageLevel].text);
@@ -33,10 +34,13 @@ public class CreateMap : MonoBehaviour {
             //１行目のみ
             if (row++ == 0)
             {
-                _character.canJump = (values[0] == "0") ? false : true;
-                _character.canChange = (values[1] == "0") ? false : true;
-                _character.canGravity = (values[2] == "0") ? false : true;
-                _character.canBlink = (values[3] == "0") ? false : true;
+                if (_character != null)
+                {
+                    _character.canJump = (values[0] == "0") ? false : true;
+                    _character.canChange = (values[1] == "0") ? false : true;
+                    _character.canGravity = (values[2] == "0") ? false : true;
+                    _character.canBlink = (values[3] == "0") ? false : true;
+                }
             }
             else
             {
@@ -52,10 +56,13 @@ public class CreateMap : MonoBehaviour {
                         obj.transform.position = transform.position + sub;
                         obj.transform.localScale *= scaling;
 
-                        if (integer == 1)
+                        if (_character != null)
                         {
-                            _character.transform.position = obj.transform.position;
-                            _character.respawn = _character.transform.position;
+                            if (integer == 1)
+                            {
+                                _character.transform.position = obj.transform.position;
+                                _character.respawn = _character.transform.position;
+                            }
                         }
                     }
                     sub.x += scaling * 1.25F;
