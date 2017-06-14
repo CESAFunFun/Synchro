@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public Gamepad gamepad;
 
     private bool goalFlag = false;
-    private int playerNumber = 0;
+    private int playerNumber = 2;
 
     [SerializeField] private Player player1;
     [SerializeField] private Player player2;
