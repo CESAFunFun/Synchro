@@ -58,7 +58,7 @@ public class SelectManager : MonoBehaviour {
 
             if(_gamepad.startButton.trigger)
             {
-                GameManager.Instance.mapLevel = _number + 1;
+                GameController.Instance.mapLevel = _number + 1;
                 SceneManager.LoadScene("Play");
             }
 

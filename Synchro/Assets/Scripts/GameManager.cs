@@ -8,97 +8,89 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public Gamepad gamepad;
 
-    private bool _isGoal = false;
+    private bool goalFlag = false;
+    private int playerNumber = 0;
 
-    public int mapLevel = 1;
-
-    [SerializeField]
-    private GameObject[] obj;
-    
+    [SerializeField] private Player player1;
+    [SerializeField] private Player player2;
+    [SerializeField] private Child child;
+    [SerializeField] private RectTransform turn;
 
     private void Start()
     {
-        Find();
         gamepad = GameController.Instance.gamepad;
     }
 
     private void Update() {
 
-        if (obj[0] == null)
-            Find();
-
-
-
-        if (_isGoal)
+        // 操作キャラクターの変更
+        if (player1.canChange && player2.canChange)
         {
-            // クリアしたらSelectへ遷移
-            if (gamepad.startButton.trigger)
+            if (gamepad.buttonB.trigger)
             {
-                _isGoal = false;
-                SceneManager.LoadScene("Select");
+                player1.isControll = true;
+                player2.isControll = false;
+                playerNumber = 0;
+            }
+            else if (gamepad.buttonX.trigger)
+            {
+                player1.isControll = false;
+                player2.isControll = true;
+                playerNumber = 1;
+            }
+            else if (gamepad.buttonY.trigger)
+            {
+                player1.isControll = true;
+                player2.isControll = true;
+                playerNumber = 2;
             }
         }
-        else
+
+        // 選択されている色が表示されるように回転
+        turn.eulerAngles = new Vector3(0F, 0F, playerNumber * 120F);
+
+        // クリアしたらSelectへ遷移
+        if (gamepad.startButton.trigger)
         {
-            // デバック用にSelectへ遷移
-            if (gamepad.backButton.trigger)
+            if (goalFlag)
             {
+                goalFlag = false;
                 SceneManager.LoadScene("Select");
             }
-            //ポーズ
-            if (Application.loadedLevelName == "Play")
+            else
             {
                 Pose();
             }
         }
     }
 
-    private void isClear()
+    private void Clear()
     {
-        _isGoal = true;
+        goalFlag = true;
     }
 
-    private void isFail(GameObject failObject)
+    private void Fail()
     {
-        failObject.GetComponent<Character>().Restart();
+        player1.Restart();
+        player2.Restart();
+        child.Restart();
     }
 
-    private void OnGUI()
-    {
-        if (_isGoal)
+    private void OnGUI() {
+        if (goalFlag)
         {
-            //if (GUI.Button(new Rect(Screen.width / 2, 100, 450, 100), "Clear"))
-            GUI.TextArea(new Rect(Screen.width / 2F, Screen.height / 2F, 75, 50), "Clear!");
+            //GUI.TextArea(new Rect(Screen.width / 2F, Screen.height / 2F, 75, 50), "Clear!");
         }
-    }
-    public void Find()
-    {
-        obj[0] = GameObject.Find("Player1");
-        obj[1] = GameObject.Find("Player2");
-        obj[2] = GameObject.Find("Child");
-        obj[3] = GameObject.Find("LineRenderer");
     }
 
     private void Pose()
     {
-        if(gamepad.startButton.trigger)
-        {
-            for(int i=0;i<obj.Length;i++)
-            {
-                if (i < 2)
-                {
-                    obj[i].GetComponent<Player>().enabled = !obj[i].GetComponent<Player>().enabled;
-                    obj[i].GetComponent<Rigidbody>().isKinematic = !obj[i].GetComponent<Rigidbody>().isKinematic;
-                }
-                else if(i==2)
-                {
-                    obj[i].GetComponent<Rigidbody>().isKinematic = !obj[i].GetComponent<Rigidbody>().isKinematic;
-                    obj[i].GetComponent<Child>().enabled = !obj[i].GetComponent<Child>().enabled;
-                }
-                else
-                    obj[i].GetComponent<LinkedPlayer>().enabled = !obj[i].GetComponent<LinkedPlayer>().enabled;
-            }
-        }
+        player1.enabled = !player1.enabled;
+        player1.GetComponent<Rigidbody>().isKinematic = !player1.GetComponent<Rigidbody>().isKinematic;
+        player2.enabled = !player2.enabled;
+        player2.GetComponent<Rigidbody>().isKinematic = !player2.GetComponent<Rigidbody>().isKinematic;
+        child.enabled = !child.enabled;
+        child.GetComponent<Rigidbody>().isKinematic = !child.GetComponent<Rigidbody>().isKinematic;
     }
 
 }
