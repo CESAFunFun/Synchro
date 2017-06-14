@@ -16,8 +16,8 @@ public class test : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        currentMap = gameObject.transform.parent.GetComponent<Stage>().stageLevel;
-        objects = gameObject.transform.parent.GetComponent<Stage>().stageObjects;
+        //currentMap = gameObject.transform.parent.GetComponent<Stage>().stageLevel;
+        //objects = gameObject.transform.parent.GetComponent<Stage>().stageObjects;
 
         Debug.Log(currentMap);
 
