@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
             if (goalFlag)
             {
                 goalFlag = false;
-                SceneManager.LoadScene("Select");
+                SceneManager.LoadScene("Select2");
             }
             else
             {
