@@ -16,6 +16,12 @@ public class SelectManager : MonoBehaviour {
 
     float _curremtTime;
 
+    [SerializeField]
+    private Camera _camera;
+
+    [SerializeField]
+    private Transform[] _cameraPos;
+
     // Use this for initialization
     void Start()
     {
@@ -51,7 +57,7 @@ public class SelectManager : MonoBehaviour {
             {
                 _stagenum[_number].RotFlag = false;
                 _number += num;
-                GameController.Instance.mapLevel=
+                GameController.Instance.mapLevel = _number;
                _number = Mathf.Clamp(_number, 0, _stagenum.Length-1);
                 _stagenum[_number].RotFlag = true;
                 _curremtTime = 0;
@@ -59,7 +65,7 @@ public class SelectManager : MonoBehaviour {
 
             if(_gamepad.startButton.trigger)
             {
-                GameController.Instance.mapLevel = _number + 1;
+                GameController.Instance.mapLevel = _number;
                 SceneManager.LoadScene("Play");
             }
 
@@ -67,7 +73,17 @@ public class SelectManager : MonoBehaviour {
 
         }
 
-
-
+        if (_number <= 4 && _number >= 0)
+        {
+            _camera.transform.position = Vector3.Lerp(_camera.transform.position, _cameraPos[0].position, 1.0f);
+        }
+        else if (_number <= 9 && _number >= 5)
+        {
+            _camera.transform.position = Vector3.Lerp(_camera.transform.position, _cameraPos[1].position, 1.0f);
+        }
+        else
+        {
+            _camera.transform.position = Vector3.Lerp(_camera.transform.position, _cameraPos[2].position, 1.0f);
+        }
 	}
 }
