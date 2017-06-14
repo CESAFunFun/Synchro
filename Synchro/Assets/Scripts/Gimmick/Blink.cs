@@ -8,47 +8,41 @@ public class Blink : MonoBehaviour {
     [SerializeField]
     private float _interval = 2;
 
-    private float _time = 0;
+    private float _currentTime = 0;
 
     private bool _enabled = true;
 
-    private SpriteRenderer _spriteRend;
-    private BoxCollider _boxCol;
+    private Vector3 pos;
 
 	// Use this for initialization
 	void Start () {
 
-        _spriteRend = gameObject.GetComponent<SpriteRenderer>();
-        _boxCol = gameObject.GetComponent<BoxCollider>();
-
+        pos = gameObject.transform.position;
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        _time++;
-        
-        //時間たつと消したり出したりする
-        if(_time >= 60 * _interval)
+
+        _currentTime += Time.deltaTime;
+
+        if (_currentTime > _interval)
         {
-            _time = 0;
-            if(_enabled)
+            transform.position = new Vector3(10000000, 0, 0);
+            _enabled = false;
+
+            if (_currentTime > _interval * 2)
             {
-                _enabled = false;
-            }
-            else
-            {
-                _enabled = true;
+                Reposition();
+                _currentTime = 0;
             }
         }
 
-        EnablingDisabling(_enabled);
-
 	}
-
-    private void EnablingDisabling(bool flag)
+    private void Reposition()
     {
-        _spriteRend.enabled = flag;
-        _boxCol.enabled = flag;
+        transform.position = pos;
+        _enabled = true;
     }
+
 }
