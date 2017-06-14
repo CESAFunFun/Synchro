@@ -13,17 +13,18 @@ public class UIAction : MonoBehaviour {
     private GameObject _imageGrav;
     [SerializeField]
     private GameObject _imageBlink;
+    
     // Use this for initialization
     void Start () {
-
-        _imageJump.SetActive(_character.canJump);
-        _imageGrav.SetActive(_character.canGravity);
-        _imageBlink.SetActive(_character.canBlink);
+        //_imageJump.SetActive(_character.canJump);
+        //_imageGrav.SetActive(_character.canGravity);
+        //_imageBlink.SetActive(_character.canBlink);
     }
 	
 	// Update is called once per frame
 	void Update () {
-
-
+        _imageJump.SetActive(_character.canJump);
+        _imageGrav.SetActive(_character.canGravity);
+        _imageBlink.SetActive(_character.canBlink);
     }
 }

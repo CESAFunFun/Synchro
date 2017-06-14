@@ -20,9 +20,14 @@ public class Stage : MonoBehaviour {
             child.mapdate = stageObjects;
             child.scaling = scaling;
         }
+        Remake();
     }
 
     private void Update() {
+        Remake();
+    }
+
+    private void Remake() {
         // 静的なクラスからレベルを取得
         var level = GameController.Instance.mapLevel;
 
