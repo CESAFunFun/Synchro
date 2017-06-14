@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
             if (goalFlag)
             {
                 goalFlag = false;
-                SceneManager.LoadScene("Select");
+                SceneManager.LoadScene("Select2");
             }
             else
             {
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     private void OnGUI() {
         if (goalFlag)
         {
-            //GUI.TextArea(new Rect(Screen.width / 2F, Screen.height / 2F, 75, 50), "Clear!");
+            GUI.TextArea(new Rect(Screen.width / 2F, Screen.height / 2F, 75, 50), "Clear!");
         }
     }
 
