@@ -51,6 +51,7 @@ public class SelectManager : MonoBehaviour {
             {
                 _stagenum[_number].RotFlag = false;
                 _number += num;
+                GameController.Instance.mapLevel=
                _number = Mathf.Clamp(_number, 0, _stagenum.Length-1);
                 _stagenum[_number].RotFlag = true;
                 _curremtTime = 0;
