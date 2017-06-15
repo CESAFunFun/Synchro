@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    public int mapLevel = 0;
+    public int mapLevel;
 
     [HideInInspector]
     public Gamepad gamepad;

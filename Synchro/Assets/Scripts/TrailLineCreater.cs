@@ -23,8 +23,8 @@ public class TrailLineCreater : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (trail.transform.position.x > 15.0f || trail.transform.position.x < -15.0f||
-            trail.transform.position.y > 15.0f || trail.transform.position.y < -15.0f)
+        if (trail.transform.position.x > transform.position.x + 25.0f || trail.transform.position.x < transform.position.x + -25.0f ||
+            trail.transform.position.y > transform.position.y + 15.0f || trail.transform.position.y < transform.position.y + -15.0f)
         {
             Destroy(trail);
             trail = Instantiate(_trailPrefab, transform.position, Quaternion.identity);
