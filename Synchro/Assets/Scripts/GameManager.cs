@@ -62,6 +62,10 @@ public class GameManager : MonoBehaviour
                 Pose();
             }
         }
+        if(gamepad.backButton.trigger)
+        {
+            SceneManager.LoadScene("Select2");
+        }
     }
 
     private void Clear()
