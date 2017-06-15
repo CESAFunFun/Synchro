@@ -61,22 +61,22 @@ public class TrailMove : MonoBehaviour
 
     private void TrailDirection()
     {
-        if (_state == State.LEFT && _pastStat != State.RIGHT)
+        if (_state == State.LEFT && _pastStat != State.RIGHT && _initState != State.RIGHT)
         {
             move = new Vector3(-1, 0, 0);
             _pastStat = State.LEFT;
         }
-        else if (_state == State.RIGHT && _pastStat != State.LEFT)
+        else if (_state == State.RIGHT && _pastStat != State.LEFT && _initState != State.LEFT)
         {
             move = new Vector3(1, 0, 0);
             _pastStat = State.RIGHT;
         }
-        else if (_state == State.DOWN && _pastStat != State.UP)
+        else if (_state == State.DOWN && _pastStat != State.UP && _initState != State.UP)
         {
             move = new Vector3(0, -1, 0);
             _pastStat = State.DOWN;
         }
-        else if (_state == State.UP && _pastStat != State.DOWN)
+        else if (_state == State.UP && _pastStat != State.DOWN && _initState != State.DOWN)
         {
             move = new Vector3(0, 1, 0);
             _pastStat = State.UP;
