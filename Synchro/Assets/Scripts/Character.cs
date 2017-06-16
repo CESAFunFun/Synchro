@@ -12,6 +12,7 @@ public class Character : MonoBehaviour {
 
     public float moveSpeed = 1F;
     public float jumpPower = 1F;
+    public Color color = Color.white;
 
     [HideInInspector]
     public bool isGround = false;
@@ -21,13 +22,13 @@ public class Character : MonoBehaviour {
     public Vector3 respawn;
 
     [HideInInspector]
-    public bool canJump;
+    public bool canJump = false;
     [HideInInspector]
-    public bool canChange;
+    public bool canChange = false;
     [HideInInspector]
-    public bool canGravity;
+    public bool canGravity = false;
     [HideInInspector]
-    public bool canBlink;
+    public bool canBlink = false;
 
     private const float G_POWER = 9.8F;
     private const float G_LENGTH = 0.6F;

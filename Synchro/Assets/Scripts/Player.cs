@@ -18,12 +18,16 @@ public class Player : Character
     [SerializeField]
     private Player partner;
 
-    private Character _child;
+    //private Character _child;
 
     [HideInInspector]
     public bool conectflag = false;
 
     private LineRenderer _line;
+
+    private Material colorMat;
+
+    public Material colorMaterial { get { return colorMat; } }
 
     // Use this for initialization
     protected override void Start()
@@ -32,7 +36,17 @@ public class Player : Character
         base.Start();
         gamepad = GameController.Instance.gamepad;
         _line = GetComponent<LineRenderer>();
-        _child = null;
+        //_child = null;
+
+        // スプライトの色を決定
+        GetComponent<SpriteRenderer>().color = color;
+        // トレイルの色（マテリアル）を決定
+        colorMat = new Material(Shader.Find("Standard"));
+        colorMat.SetOverrideTag("RenderType", "Transparent");
+        colorMat.SetFloat("_Glossiness", 0F);
+        colorMat.SetFloat("_Metallic", 0F);
+        colorMat.SetColor("_Color", color);
+        colorMat.SetColor("_EmissionColor", color);
     }
 
     // Update is called once per frame
@@ -63,7 +77,7 @@ public class Player : Character
         // 足場反転処理
         if (gamepad.leftButton.trigger)
         {
-            BlinkPosition();
+            //BlinkPosition();
         }
 
         // パートナーとの座標差分が一定内の場合に線描画を行うための処理
@@ -77,7 +91,7 @@ public class Player : Character
          && direction.y >= -(transform.localScale.y / 2F) * 18F && direction.y <= (transform.localScale.y / 2F) * 18F))
         {
             // 子要素を見つけるためにRaycastを行う
-            if(!_child)
+            if(!/*_child*/conectflag)
             {
                 RaycastHit hit;
                 var dis = Vector3.Distance(transform.position, partner.transform.position);
@@ -85,32 +99,33 @@ public class Player : Character
                 {
                     if(hit.transform.tag == "Child")
                     {
-                        _child = hit.transform.GetComponent<Child>();
+                        //_child = hit.transform.GetComponent<Child>();
+                        conectflag = true;
                     }
                 }
             }
 
-            // 子要素を見つけたら線をつなげる
-            if(_child && isControll)
-            {
-                conectflag = true;
-                _line.SetPosition(0, transform.position);
-                _line.SetPosition(1, _child.transform.position);
-
-                // パートナーとつながっていたら移動処理
-                if(partner.conectflag && partner.isControll)
-                {
-                    var sub = transform.position + direction / 2F;
-                    _child.downGravity = downGravity;
-                    _child.transform.position = new Vector3(
-                        sub.x, sub.y, _child.transform.position.z);
-                }
-            }
+            //// 子要素を見つけたら線をつなげる
+            //if(_child && isControll)
+            //{
+            //    conectflag = true;
+            //    _line.SetPosition(0, transform.position);
+            //    _line.SetPosition(1, _child.transform.position);
+            //
+            //    // パートナーとつながっていたら移動処理
+            //    if(partner.conectflag && partner.isControll)
+            //    {
+            //        var sub = transform.position + direction / 2F;
+            //        _child.downGravity = downGravity;
+            //        _child.transform.position = new Vector3(
+            //            sub.x, sub.y, _child.transform.position.z);
+            //    }
+            //}
         }
         else
         {
             // 一定範囲の外なので処理をしない
-            _child = null;
+            //_child = null;
             conectflag = false;
         }
 
@@ -122,7 +137,7 @@ public class Player : Character
     {
         if (other.tag == "DeadZone")
         {
-            _child = null;
+            //_child = null;
             Restart();
             partner.Restart();
             conectflag = false;

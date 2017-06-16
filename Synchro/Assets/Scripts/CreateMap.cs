@@ -55,6 +55,10 @@ public class CreateMap : MonoBehaviour {
                         var obj = Instantiate(mapdate[integer], transform);
                         obj.transform.position = transform.position + sub;
                         obj.transform.localScale *= scaling;
+                        if (integer == 0)
+                        {
+                            obj.GetComponent<SpriteRenderer>().color = _character.color;
+                        }
 
                         if (_character != null)
                         {
