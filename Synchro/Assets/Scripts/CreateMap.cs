@@ -57,7 +57,7 @@ public class CreateMap : MonoBehaviour {
                         obj.transform.localScale *= scaling;
                         if (integer == 0)
                         {
-                            obj.GetComponent<SpriteRenderer>().color = _character.color;
+                            obj.GetComponent<SpriteRenderer>().color = _character.colorMaterial.color;
                         }
 
                         if (_character != null)
