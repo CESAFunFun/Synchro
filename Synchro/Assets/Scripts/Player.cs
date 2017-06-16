@@ -25,10 +25,6 @@ public class Player : Character
 
     private LineRenderer _line;
 
-    private Material colorMat;
-
-    public Material colorMaterial { get { return colorMat; } }
-
     // Use this for initialization
     protected override void Start()
     {
@@ -39,14 +35,15 @@ public class Player : Character
         //_child = null;
 
         // スプライトの色を決定
-        GetComponent<SpriteRenderer>().color = color;
-        // トレイルの色（マテリアル）を決定
-        colorMat = new Material(Shader.Find("Standard"));
-        colorMat.SetOverrideTag("RenderType", "Transparent");
-        colorMat.SetFloat("_Glossiness", 0F);
-        colorMat.SetFloat("_Metallic", 0F);
-        colorMat.SetColor("_Color", color);
-        colorMat.SetColor("_EmissionColor", color);
+        GetComponent<SpriteRenderer>().color = colorMat.color;
+        //// トレイルの色（マテリアル）を決定
+        //colorMat = new Material(Shader.Find("Standard"));
+        //colorMat.SetOverrideTag("RenderType", "Transparent");
+        //colorMat.SetFloat("_Glossiness", 0F);
+        //colorMat.SetFloat("_Metallic", 0F);
+        //colorMat.SetColor("_Color", color);
+        //colorMat.SetColor("_EmissionColor", color);
+        GetComponent<TrailRenderer>().material = colorMat;
     }
 
     // Update is called once per frame
