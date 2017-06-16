@@ -12,7 +12,6 @@ public class Character : MonoBehaviour {
 
     public float moveSpeed = 1F;
     public float jumpPower = 1F;
-    public Color color = Color.white;
 
     [HideInInspector]
     public bool isGround = false;
@@ -39,7 +38,13 @@ public class Character : MonoBehaviour {
 
     private bool _skyChange;
 
-	protected virtual void Start () {
+    [SerializeField]
+    protected Material colorMat;
+
+    public Material colorMaterial { get { return colorMat; } }
+
+
+    protected virtual void Start () {
         // 重力関連のフラグを初期化
         isGround = false;
         downGravity = true;

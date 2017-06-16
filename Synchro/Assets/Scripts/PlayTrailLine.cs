@@ -35,6 +35,7 @@ public class PlayTrailLine : MonoBehaviour {
             _trail[i] = Instantiate(_trailPrefab, new Vector3(transform.position.x + (i * 2), _initY, 0),Quaternion.identity);
             _trail[i].transform.SetParent(transform);
             _trail[i].GetComponent<TrailMove>().InitState = _state;
+            _trail[i].GetComponent<TrailRenderer>().material = new Material(_player.colorMaterial);
         }
 
     }
@@ -62,6 +63,7 @@ public class PlayTrailLine : MonoBehaviour {
                 _trail[i] = Instantiate(_trailPrefab, new Vector3(transform.position.x + (i * 2), _initY, 0), Quaternion.identity);
                 _trail[i].transform.SetParent(transform);
                 _trail[i].GetComponent<TrailMove>().InitState = _state;
+                _trail[i].GetComponent<TrailRenderer>().material = _player.colorMaterial;
             }
 
         }
