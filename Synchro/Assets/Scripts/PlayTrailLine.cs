@@ -10,37 +10,60 @@ public class PlayTrailLine : MonoBehaviour {
     [SerializeField]
     private GameObject _trailPrefab;
 
-    private GameObject trail;
+    private GameObject[] _trail = new GameObject[10];
     
     private TrailMove.State _state;
-
-    private float currentTime = 0;
-
-    private float waitTime = 5;
 
     // Use this for initialization
     void Start () {
 
-        if (_player.downGravity) _state = TrailMove.State.DOWN;
-        else _state = TrailMove.State.UP;
+        float _initY = 20.0f;
+        if (_player.downGravity)
+        {
+            _state = TrailMove.State.DOWN;
 
-        trail = Instantiate(_trailPrefab, transform.position, Quaternion.identity);
-        trail.GetComponent<TrailMove>().InitState = _state;
+        }
+        else
+        {
+            _state = TrailMove.State.UP;
+            _initY *= -1;
+        }
+        //背景のパーティクル
+        for (int i = 0; i < _trail.Length; i++)
+        {
+            //Instantiate(_trailPrefab);
+            _trail[i] = Instantiate(_trailPrefab, new Vector3(transform.position.x + (i * 2), _initY, 0),Quaternion.identity);
+            _trail[i].transform.SetParent(transform);
+            _trail[i].GetComponent<TrailMove>().InitState = _state;
+        }
+
     }
 	
 	// Update is called once per frame
 	void Update () {
 
-        if (_player.downGravity) _state = TrailMove.State.DOWN;
-        else _state = TrailMove.State.UP;
-        currentTime += Time.deltaTime;
-        if (currentTime > waitTime)
+        float _initY = 20.0f;
+        if (_player.downGravity)
         {
-            Destroy(trail);
-            trail = Instantiate(_trailPrefab, transform.position, Quaternion.identity);
-            trail.GetComponent<TrailMove>().InitState = _state;
-            currentTime = 0;
+            _state = TrailMove.State.DOWN;
         }
+        else
+        {
+            _state = TrailMove.State.UP;
+            _initY *= -1;
+        }
+        //範囲外に出たら再生成
+        for (int i = 0; i < _trail.Length; i++)
+        {
+            if (_trail[i].transform.position.x > transform.position.x + 25.0f || _trail[i].transform.position.x < transform.position.x + -25.0f ||
+                _trail[i].transform.position.y > transform.position.y + 25.0f || _trail[i].transform.position.y < transform.position.y + -25.0f)
+            {
+                Destroy(_trail[i]);
+                _trail[i] = Instantiate(_trailPrefab, new Vector3(transform.position.x + (i * 2), _initY, 0), Quaternion.identity);
+                _trail[i].transform.SetParent(transform);
+                _trail[i].GetComponent<TrailMove>().InitState = _state;
+            }
 
-	}
+        }
+    }
 }
