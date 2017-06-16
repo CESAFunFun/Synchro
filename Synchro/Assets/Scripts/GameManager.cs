@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public Gamepad gamepad;
 
+    private bool pauseFlag = false;
     private bool goalFlag = false;
+
     private int playerNumber = 2;
 
     [SerializeField] private Player player1;
@@ -16,12 +18,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Child child;
     [SerializeField] private RectTransform turn;
 
+    [SerializeField]
+    private GameObject _clear;
+    [SerializeField]
+    private GameObject _pause;
+
     private void Start()
     {
         gamepad = GameController.Instance.gamepad;
     }
 
     private void Update() {
+
 
         // 操作キャラクターの変更
         if (player1.canChange && player2.canChange)
@@ -52,20 +60,40 @@ public class GameManager : MonoBehaviour
         // クリアしたらSelectへ遷移
         if (gamepad.startButton.trigger)
         {
+            //if (goalFlag)
+            //{
+            //    goalFlag = false;
+            //    SceneManager.LoadScene("Select2");
+            //}
+            //else
+            {
+                Pose();
+            }
+        }
+        if(gamepad.buttonA.trigger)
+        {
             if (goalFlag)
             {
                 goalFlag = false;
                 SceneManager.LoadScene("Select2");
             }
-            else
-            {
-                Pose();
-            }
         }
-        if(gamepad.backButton.trigger)
+
+        if (gamepad.backButton.trigger)
         {
             SceneManager.LoadScene("Select2");
         }
+
+        if (goalFlag && !pauseFlag)
+        {
+            Pose();
+            pauseFlag = !pauseFlag;
+        }
+        if (goalFlag)
+        {
+            _clear.gameObject.SetActive(true);
+         }
+
     }
 
     private void Clear()
@@ -81,10 +109,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void OnGUI() {
-        if (goalFlag)
-        {
-            GUI.TextArea(new Rect(Screen.width / 2F, Screen.height / 2F, 75, 50), "Clear!");
-        }
+       
     }
 
     private void Pose()
@@ -95,6 +120,11 @@ public class GameManager : MonoBehaviour
         player2.GetComponent<Rigidbody>().isKinematic = !player2.GetComponent<Rigidbody>().isKinematic;
         child.enabled = !child.enabled;
         child.GetComponent<Rigidbody>().isKinematic = !child.GetComponent<Rigidbody>().isKinematic;
+        if (!goalFlag)
+        {
+            _pause.SetActive(child.GetComponent<Rigidbody>().isKinematic);
+        }
+        
     }
 
 }
