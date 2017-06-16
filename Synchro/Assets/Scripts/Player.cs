@@ -15,13 +15,11 @@ public class Player : Character
     [HideInInspector]
     public bool isControll = true;
 
-    [SerializeField]
-    private Player partner;
-
-    //private Character _child;
-
     [HideInInspector]
     public bool conectflag = false;
+
+    [SerializeField]
+    private Child _child;
 
     private LineRenderer _line;
 
@@ -32,7 +30,6 @@ public class Player : Character
         base.Start();
         gamepad = GameController.Instance.gamepad;
         _line = GetComponent<LineRenderer>();
-        //_child = null;
 
         // スプライトの色を決定
         GetComponent<SpriteRenderer>().color = colorMat.color;
@@ -51,6 +48,9 @@ public class Player : Character
     {
         // キャラクターの更新
         base.Update();
+
+        // パートナーとの座標差分が一定内の場合に線描画を行うための処理
+        ConectLine();
 
         // ここで入力を受け付けない
         if (!isControll) return;
@@ -76,67 +76,37 @@ public class Player : Character
         {
             //BlinkPosition();
         }
-
-        // パートナーとの座標差分が一定内の場合に線描画を行うための処理
-        ConectLine(partner.transform.position - transform.position);
     }
 
-    private void ConectLine(Vector3 direction)
+    private void ConectLine()
     {
-        // パートナーとの一定範囲内ならば処理を開始する
-        if((direction.x >= -(transform.localScale.x / 2F) * 05F && direction.x <= (transform.localScale.x / 2F) * 05F
-         && direction.y >= -(transform.localScale.y / 2F) * 18F && direction.y <= (transform.localScale.y / 2F) * 18F))
+        if ((transform.position.x - _child.transform.position.x)*(transform.position.x - _child.transform.position.x)
+            +(transform.position.y - _child.transform.position.y)*(transform.position.y - _child.transform.position.y)
+            <=(0.5f+0.5f)*(0.5f+0.5f))
         {
-            // 子要素を見つけるためにRaycastを行う
-            if(!/*_child*/conectflag)
-            {
-                RaycastHit hit;
-                var dis = Vector3.Distance(transform.position, partner.transform.position);
-                if(Physics.Raycast(transform.position, direction, out hit, dis))
-                {
-                    if(hit.transform.tag == "Child")
-                    {
-                        //_child = hit.transform.GetComponent<Child>();
-                        conectflag = true;
-                    }
-                }
-            }
-
-            //// 子要素を見つけたら線をつなげる
-            //if(_child && isControll)
-            //{
-            //    conectflag = true;
-            //    _line.SetPosition(0, transform.position);
-            //    _line.SetPosition(1, _child.transform.position);
-            //
-            //    // パートナーとつながっていたら移動処理
-            //    if(partner.conectflag && partner.isControll)
-            //    {
-            //        var sub = transform.position + direction / 2F;
-            //        _child.downGravity = downGravity;
-            //        _child.transform.position = new Vector3(
-            //            sub.x, sub.y, _child.transform.position.z);
-            //    }
-            //}
+            conectflag = true;
+            print("conect");
         }
         else
         {
             // 一定範囲の外なので処理をしない
-            //_child = null;
             conectflag = false;
         }
-
+        // 子要素を見つけたら線をつなげる
+        if (conectflag)
+        {
+            conectflag = true;
+            _line.SetPosition(0, transform.position);
+            _line.SetPosition(1, _child.transform.position);
+        }
         // 繋がっていたら描画を有効化
         _line.enabled = conectflag;
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "DeadZone")
         {
-            //_child = null;
             Restart();
-            partner.Restart();
             conectflag = false;
         }
     }

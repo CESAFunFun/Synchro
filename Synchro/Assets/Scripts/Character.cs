@@ -162,6 +162,7 @@ public class Character : MonoBehaviour {
             if (Physics.Linecast(transform.position, transform.position + _gravity.normalized * G_LENGTH))
             {
                 isGround = true;
+                _rigidbody.velocity = Vector3.zero;
             }
             else
             {
