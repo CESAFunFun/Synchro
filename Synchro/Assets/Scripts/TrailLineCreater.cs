@@ -24,7 +24,7 @@ public class TrailLineCreater : MonoBehaviour {
 	void Update () {
 
         if (trail.transform.position.x > transform.position.x + 25.0f || trail.transform.position.x < transform.position.x + -25.0f ||
-            trail.transform.position.y > transform.position.y + 15.0f || trail.transform.position.y < transform.position.y + -15.0f)
+            trail.transform.position.y > transform.position.y + 25.0f || trail.transform.position.y < transform.position.y + -25.0f)
         {
             Destroy(trail);
             trail = Instantiate(_trailPrefab, transform.position, Quaternion.identity);
