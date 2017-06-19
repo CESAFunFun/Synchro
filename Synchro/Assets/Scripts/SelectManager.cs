@@ -9,6 +9,7 @@ public class SelectManager : MonoBehaviour {
 
     private Gamepad _gamepad;
 
+    [SerializeField]
     private int _number = 0;
 
     [SerializeField]
@@ -28,6 +29,8 @@ public class SelectManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        //XXX:Maplevelが0の時にエラーが出ます
+        _number = GameController.Instance.mapLevel - 1;
         _stagenum[_number].RotFlag = true;
         SoundManager.instance.PlayBGM(bgm);
     }

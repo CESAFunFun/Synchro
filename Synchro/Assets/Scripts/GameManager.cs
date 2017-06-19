@@ -11,12 +11,16 @@ public class GameManager : MonoBehaviour
     private bool pauseFlag = false;
     private bool goalFlag = false;
 
-    private int playerNumber = 2;
+    private int _playerNumber = 2;
 
-    [SerializeField] private Player player1;
-    [SerializeField] private Player player2;
-    [SerializeField] private Child child;
-    [SerializeField] private RectTransform turn;
+    [SerializeField]
+    private Player _player1;
+    [SerializeField]
+    private Player _player2;
+    [SerializeField]
+    private Child child;
+    [SerializeField]
+    private RectTransform turn;
 
     [SerializeField]
     private GameObject _clear;
@@ -34,70 +38,59 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update() {
-
-
         // 操作キャラクターの変更
-        if (player1.canChange && player2.canChange)
+        if (_player1.canChange && _player2.canChange)
         {
             if (gamepad.buttonB.trigger)
             {
-                player1.isControll = true;
-                player2.isControll = false;
-                playerNumber = 0;
+                _player1.isControll = true;
+                _player2.isControll = false;
+                _playerNumber = 0;
             }
             else if (gamepad.buttonX.trigger)
             {
-                player1.isControll = false;
-                player2.isControll = true;
-                playerNumber = 1;
+                _player1.isControll = false;
+                _player2.isControll = true;
+                _playerNumber = 1;
             }
             else if (gamepad.buttonY.trigger)
             {
-                player1.isControll = true;
-                player2.isControll = true;
-                playerNumber = 2;
+                _player1.isControll = true;
+                _player2.isControll = true;
+                _playerNumber = 2;
             }
         }
 
         // 選択されている色が表示されるように回転
-        turn.eulerAngles = new Vector3(0F, 0F, playerNumber * 120F);
+        turn.eulerAngles = new Vector3(0F, 0F, _playerNumber * 120F);
 
-        // クリアしたらSelectへ遷移
+        // 「ポーズ」のGUIを表示
         if (gamepad.startButton.trigger)
         {
-            //if (goalFlag)
-            //{
-            //    goalFlag = false;
-            //    SceneManager.LoadScene("Select2");
-            //}
-            //else
-            {
-                Pose();
-            }
-        }
-        if(gamepad.buttonA.trigger)
-        {
-            if (goalFlag)
-            {
-                goalFlag = false;
-                SceneManager.LoadScene("Select");
-            }
+            Pause();
+            _pause.SetActive(!_pause.activeSelf);
+            //pauseFlag = !pauseFlag;
         }
 
-        if (gamepad.backButton.trigger)
-        {
-            SceneManager.LoadScene("Select");
-        }
+        //if (goalFlag && !pauseFlag)
+        //{
+        //    Pause();
+        //    pauseFlag = !pauseFlag;
+        //}
 
-        if (goalFlag && !pauseFlag)
-        {
-            Pose();
-            pauseFlag = !pauseFlag;
-        }
+        // ゴールしていたら「ゴール」のGUIを表示
         if (goalFlag)
         {
-            _clear.gameObject.SetActive(true);
-         }
+            Pause();
+            _clear.SetActive(goalFlag);
+
+            if(gamepad.buttonA.trigger)
+                GameController.Instance.mapLevel++;
+        }
+        //if (goalFlag)
+        //{
+        //    _clear.gameObject.SetActive(true);
+        //}
 
     }
 
@@ -110,28 +103,31 @@ public class GameManager : MonoBehaviour
     private void Fail()
     {
         SoundManager.instance.PlaySFX(_failSound);
-        player1.Restart();
-        player2.Restart();
+        _player1.Restart();
+        _player2.Restart();
         child.Restart();
     }
 
-    private void OnGUI() {
-       
-    }
+    private void Pause() {
+        // 移動等の処理を停止
+        _player1.enabled = _pause.activeSelf;
+        _player2.enabled = _pause.activeSelf;
+        child.enabled = _pause.activeSelf;
+        // 物理演算の処理を停止
+        _player1.GetComponent<Rigidbody>().isKinematic = !_pause.activeSelf;
+        _player2.GetComponent<Rigidbody>().isKinematic = !_pause.activeSelf;
+        child.GetComponent<Rigidbody>().isKinematic = !_pause.activeSelf;
 
-    private void Pose()
-    {
-        player1.enabled = !player1.enabled;
-        player1.GetComponent<Rigidbody>().isKinematic = !player1.GetComponent<Rigidbody>().isKinematic;
-        player2.enabled = !player2.enabled;
-        player2.GetComponent<Rigidbody>().isKinematic = !player2.GetComponent<Rigidbody>().isKinematic;
-        child.enabled = !child.enabled;
-        child.GetComponent<Rigidbody>().isKinematic = !child.GetComponent<Rigidbody>().isKinematic;
-        if (!goalFlag)
-        {
-            _pause.SetActive(child.GetComponent<Rigidbody>().isKinematic);
-        }
-        
+        //_player1.enabled = !_player1.enabled;
+        //_player1.GetComponent<Rigidbody>().isKinematic = !_player1.GetComponent<Rigidbody>().isKinematic;
+        //_player2.enabled = !_player2.enabled;
+        //_player2.GetComponent<Rigidbody>().isKinematic = !_player2.GetComponent<Rigidbody>().isKinematic;
+        //child.enabled = !child.enabled;
+        //child.GetComponent<Rigidbody>().isKinematic = !child.GetComponent<Rigidbody>().isKinematic;
+        //if (!goalFlag)
+        //{
+        //    _pause.SetActive(!_pause.activeSelf);
+        //}
     }
 
 }
