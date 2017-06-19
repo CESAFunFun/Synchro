@@ -20,8 +20,12 @@ public class TitleCursor : MonoBehaviour {
 
     private bool _playflag = true;
 
+    [SerializeField]
+    private AudioClip bgm;
+
     // Use this for initialization
     void Start () {
+        SoundManager.instance.PlayBGM(bgm);
 		
 	}
 	

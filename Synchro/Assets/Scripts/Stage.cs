@@ -12,6 +12,9 @@ public class Stage : MonoBehaviour {
 
     private int _oldLevel = -1;
 
+    [SerializeField]
+    private AudioClip _bgm;
+
     private void Start() {
         // 最初にマップのオブジェクトと大きさを設定
         for(var num = 0; num < transform.childCount; num++)
@@ -21,6 +24,7 @@ public class Stage : MonoBehaviour {
             child.scaling = scaling;
         }
         Remake();
+        SoundManager.instance.PlayBGM(_bgm);
     }
 
     private void Update() {

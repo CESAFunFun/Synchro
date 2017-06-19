@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject _pause;
 
+    [SerializeField]
+    private AudioClip _failSound;
+    [SerializeField]
+    private AudioClip _clearSound;
+
     private void Start()
     {
         gamepad = GameController.Instance.gamepad;
@@ -99,10 +104,12 @@ public class GameManager : MonoBehaviour
     private void Clear()
     {
         goalFlag = true;
+        SoundManager.instance.PlaySFX(_clearSound);
     }
 
     private void Fail()
     {
+        SoundManager.instance.PlaySFX(_failSound);
         player1.Restart();
         player2.Restart();
         child.Restart();

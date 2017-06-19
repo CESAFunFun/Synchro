@@ -19,7 +19,7 @@ public class SoundManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
     
-    public void PlaySound(AudioClip clip)
+    public void PlaySFX(AudioClip clip)
     {
         sfx.clip = clip;
         sfx.Play();
