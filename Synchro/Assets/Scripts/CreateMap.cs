@@ -39,7 +39,7 @@ public class CreateMap : MonoBehaviour {
                     _character.canJump = (values[0] == "0") ? false : true;
                     _character.canChange = (values[1] == "0") ? false : true;
                     _character.canGravity = (values[2] == "0") ? false : true;
-                    _character.canBlink = (values[3] == "0") ? false : true;
+                    //_character.canBlink = (values[3] == "0") ? false : true;
                 }
             }
             else

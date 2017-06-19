@@ -13,7 +13,7 @@ public class Character : MonoBehaviour {
     public float moveSpeed = 1F;
     public float jumpPower = 1F;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool isGround = false;
     [HideInInspector]
     public bool downGravity = true;
