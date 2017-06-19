@@ -22,10 +22,14 @@ public class SelectManager : MonoBehaviour {
     [SerializeField]
     private Transform[] _cameraPos;
 
+    [SerializeField]
+    private AudioClip bgm;
+
     // Use this for initialization
     void Start()
     {
         _stagenum[_number].RotFlag = true;
+        SoundManager.instance.PlayBGM(bgm);
     }
 	// Update is called once per frame
 	void Update () {
