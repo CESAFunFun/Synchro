@@ -32,12 +32,12 @@ public class CameraMove : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         
-        if (_gamepad.rightStickPress.trigger)
-        {
-            // アクティブとなっていない方のカメラに切り替える
-            ChangeDisplay(!_mainCamera.gameObject.activeSelf);
-            frontback = !frontback;
-        }
+        //if (_gamepad.rightStickPress.trigger)
+        //{
+        //    // アクティブとなっていない方のカメラに切り替える
+        //    ChangeDisplay(!_mainCamera.gameObject.activeSelf);
+        //    frontback = !frontback;
+        //}
 
         Vector3 move = Vector3.zero;
         //入力処理

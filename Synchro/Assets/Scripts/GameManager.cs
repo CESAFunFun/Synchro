@@ -75,13 +75,13 @@ public class GameManager : MonoBehaviour
             if (goalFlag)
             {
                 goalFlag = false;
-                SceneManager.LoadScene("Select2");
+                SceneManager.LoadScene("Select");
             }
         }
 
         if (gamepad.backButton.trigger)
         {
-            SceneManager.LoadScene("Select2");
+            SceneManager.LoadScene("Select");
         }
 
         if (goalFlag && !pauseFlag)
