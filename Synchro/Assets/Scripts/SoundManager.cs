@@ -23,6 +23,10 @@ public class SoundManager : MonoBehaviour {
     {
         sfx.clip = clip;
         sfx.Play();
+        if(Input.anyKey)
+        {
+            sfx.Stop();
+        }
     }
     public void PlayBGM(AudioClip clip)
     {
