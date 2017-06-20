@@ -25,6 +25,5 @@ public class UIAction : MonoBehaviour {
 	void Update () {
         _imageJump.SetActive(_character.canJump);
         _imageGrav.SetActive(_character.canGravity);
-        _imageBlink.SetActive(_character.canBlink);
     }
 }
