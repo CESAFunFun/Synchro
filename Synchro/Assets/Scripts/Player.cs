@@ -63,18 +63,21 @@ public class Player : Character
         // ジャンプ処理
         if (gamepad.buttonA.down)
         {
-            Jump(jumpPower);
+            if(canJump)
+                Jump(jumpPower);
         }
 
         // 重力反転処理
         if (gamepad.rightButton.trigger)
         {
-            ChangeGravity();
+            if(canGravity)
+                ChangeGravity();
         }
         // 足場反転処理
         if (gamepad.leftButton.trigger)
         {
-            //BlinkPosition();
+            //if(canBlink)
+            //    BlinkPosition();
         }
     }
 

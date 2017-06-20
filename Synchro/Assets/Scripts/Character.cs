@@ -92,9 +92,6 @@ public class Character : MonoBehaviour {
     }
 
     public void Jump(float power) {
-        // マップによりジャンプ不可
-        if (!canJump) return;
-
         // 接地していた場合のみ
         if (isGround)
         {
@@ -106,9 +103,6 @@ public class Character : MonoBehaviour {
     }
 
     public void ChangeGravity() {
-        // マップにより反転不可
-        if (!canGravity) return;
-
         if (isGround)
         {
             // 一度だけ宙に浮かせて反転させる
@@ -124,9 +118,6 @@ public class Character : MonoBehaviour {
     }
 
     public void BlinkPosition() {
-        // マップにより切り替え不可
-        if (!canBlink) return;
-
         if (isGround)
         {
             // 位置を入れ替えるための原点（重力の原点）

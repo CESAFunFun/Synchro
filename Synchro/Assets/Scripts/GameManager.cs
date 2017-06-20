@@ -64,14 +64,6 @@ public class GameManager : MonoBehaviour
         // 選択されている色が表示されるように回転
         turn.eulerAngles = new Vector3(0F, 0F, _playerNumber * 120F);
 
-        // 「ポーズ」のGUIを表示
-        if (gamepad.startButton.trigger)
-        {
-            Pause();
-            _pause.SetActive(!_pause.activeSelf);
-            //pauseFlag = !pauseFlag;
-        }
-
         //if (goalFlag && !pauseFlag)
         //{
         //    Pause();
@@ -84,8 +76,18 @@ public class GameManager : MonoBehaviour
             Pause();
             _clear.SetActive(goalFlag);
 
-            if(gamepad.buttonA.trigger)
+            if (gamepad.buttonA.trigger)
                 GameController.Instance.mapLevel++;
+        }
+        else
+        {
+            // 「ポーズ」のGUIを表示
+            if (gamepad.startButton.trigger)
+            {
+                Pause();
+                _pause.SetActive(!_pause.activeSelf);
+                //pauseFlag = !pauseFlag;
+            }
         }
         //if (goalFlag)
         //{
