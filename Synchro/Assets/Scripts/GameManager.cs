@@ -62,13 +62,7 @@ public class GameManager : MonoBehaviour
         }
 
         // 選択されている色が表示されるように回転
-        turn.eulerAngles = new Vector3(0F, 0F, _playerNumber * 120F);
-
-        //if (goalFlag && !pauseFlag)
-        //{
-        //    Pause();
-        //    pauseFlag = !pauseFlag;
-        //}
+        turn.rotation = Quaternion.RotateTowards(turn.rotation, Quaternion.Euler(0F, 0F, _playerNumber * 120F), 180F * Time.deltaTime);
 
         // ゴールしていたら「ゴール」のGUIを表示
         if (goalFlag)
@@ -77,7 +71,16 @@ public class GameManager : MonoBehaviour
             _clear.SetActive(goalFlag);
 
             if (gamepad.buttonA.trigger)
-                GameController.Instance.mapLevel++;
+            {
+                if (GameController.Instance.mapLevel < 15)
+                {
+                    GameController.Instance.mapLevel++;
+                }
+                else
+                {
+                    GameController.Instance.mapLevel = 0;
+                }
+            }
         }
         else
         {
@@ -86,14 +89,8 @@ public class GameManager : MonoBehaviour
             {
                 Pause();
                 _pause.SetActive(!_pause.activeSelf);
-                //pauseFlag = !pauseFlag;
             }
         }
-        //if (goalFlag)
-        //{
-        //    _clear.gameObject.SetActive(true);
-        //}
-
     }
 
     private void Clear()
@@ -119,17 +116,6 @@ public class GameManager : MonoBehaviour
         _player1.GetComponent<Rigidbody>().isKinematic = !_pause.activeSelf;
         _player2.GetComponent<Rigidbody>().isKinematic = !_pause.activeSelf;
         child.GetComponent<Rigidbody>().isKinematic = !_pause.activeSelf;
-
-        //_player1.enabled = !_player1.enabled;
-        //_player1.GetComponent<Rigidbody>().isKinematic = !_player1.GetComponent<Rigidbody>().isKinematic;
-        //_player2.enabled = !_player2.enabled;
-        //_player2.GetComponent<Rigidbody>().isKinematic = !_player2.GetComponent<Rigidbody>().isKinematic;
-        //child.enabled = !child.enabled;
-        //child.GetComponent<Rigidbody>().isKinematic = !child.GetComponent<Rigidbody>().isKinematic;
-        //if (!goalFlag)
-        //{
-        //    _pause.SetActive(!_pause.activeSelf);
-        //}
     }
 
 }

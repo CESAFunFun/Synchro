@@ -35,23 +35,6 @@ public class Child : Character {
                 players[1].transform.position = pos;
                 first = true;
             }
-            //if (players[0].conectflag)
-            //{
-            //    downGravity = players[0].downGravity;
-            //    transform.position = new Vector3(
-            //        players[0].transform.position.x,
-            //        players[0].transform.position.y,
-            //        this.transform.position.z);
-            //}
-
-            //if (players[1].conectflag)
-            //{
-            //    downGravity = players[1].downGravity;
-            //    transform.position = new Vector3(
-            //        players[1].transform.position.x,
-            //        players[1].transform.position.y,
-            //        this.transform.position.z);
-            //}
 
             // 移動処理
             var moveX = gamepad.leftStick.x;
