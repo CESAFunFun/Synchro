@@ -39,6 +39,10 @@ public class SelectManager : MonoBehaviour
         // 入力待ち用の時間を更新
         _curremtTime += Time.deltaTime;
 
+        // 分割された画面の正面になるように位置の線形補間を行う
+        _camera.transform.position = Vector3.MoveTowards(_camera.transform.position, _cameraPos[_number / 5].position, 15F * Time.deltaTime);
+
+        // 待機時間を超えていれば以下の処理をしない
         if (_curremtTime < _waitTime) return;
 
         // コントローラの入力で移動
@@ -86,8 +90,5 @@ public class SelectManager : MonoBehaviour
         //{
         //    _camera.transform.position = Vector3.Lerp(_camera.transform.position, _cameraPos[2].position, 1.0f);
         //}
-
-        // 分割された画面の正面になるように位置の線形補間を行う
-        _camera.transform.position = Vector3.MoveTowards(_camera.transform.position, _cameraPos[_number / 5].position, 15F * Time.deltaTime);
     }
 }

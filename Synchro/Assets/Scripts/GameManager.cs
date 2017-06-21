@@ -76,10 +76,6 @@ public class GameManager : MonoBehaviour
                 {
                     GameController.Instance.mapLevel++;
                 }
-                else
-                {
-                    GameController.Instance.mapLevel = 0;
-                }
             }
         }
         else
@@ -117,5 +113,4 @@ public class GameManager : MonoBehaviour
         _player2.GetComponent<Rigidbody>().isKinematic = !_pause.activeSelf;
         child.GetComponent<Rigidbody>().isKinematic = !_pause.activeSelf;
     }
-
 }
