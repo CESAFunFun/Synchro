@@ -21,6 +21,9 @@ public class Player : Character
     [SerializeField]
     private Child _child;
 
+    [SerializeField]
+    private AudioClip _jumpSFX;
+
     private LineRenderer _line;
 
 
@@ -65,8 +68,11 @@ public class Player : Character
         // ジャンプ処理
         if (gamepad.buttonA.down)
         {
-            if(canJump)
+            if (canJump)
+            {
                 Jump(jumpPower);
+                SoundManager.instance.PlaySFX(_jumpSFX);
+            }
         }
 
         // 重力反転処理
