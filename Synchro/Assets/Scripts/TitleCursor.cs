@@ -20,6 +20,9 @@ public class TitleCursor : MonoBehaviour {
 
     private bool _playflag = true;
 
+    [SerializeField]
+    private AudioClip _okSound;
+
     // Use this for initialization
     void Start () {
 		
@@ -60,6 +63,8 @@ public class TitleCursor : MonoBehaviour {
         //Aボタンでシーン移動
         if (GameController.Instance.gamepad.buttonA.trigger)
         {
+
+            SoundManager.instance.PlaySFX(_okSound);
             if (_playflag) SceneManager.LoadScene(_sceneName);
             else Application.Quit();
         }
