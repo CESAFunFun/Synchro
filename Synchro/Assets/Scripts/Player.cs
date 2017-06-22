@@ -23,6 +23,7 @@ public class Player : Character
 
     private LineRenderer _line;
 
+
     // Use this for initialization
     protected override void Start()
     {
