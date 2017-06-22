@@ -88,7 +88,6 @@ public class Player : Character
             <=(0.5f+0.5f)*(0.5f+0.5f))
         {
             conectflag = true;
-            print("conect");
         }
         else
         {

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuCursor : MonoBehaviour {
+public class MenuCursor : MonoBehaviour
+{
 
     [SerializeField]
     private RectTransform _cursor;
@@ -11,14 +12,65 @@ public class MenuCursor : MonoBehaviour {
     [SerializeField]
     private RectTransform[] _menu;
 
+    private Vector3 pos;
+
     [SerializeField]
     private string[] _scenesName;
-    
+
     private int _sceneNumber = 0;
     private int _recastCount = 0;
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
+
+        // メニュー項目に位置を修正
+        _sceneNumber = Mathf.Clamp(_sceneNumber, 0, _menu.Length - 1);
+        pos = _cursor.localPosition;
+        pos.y = _menu[_sceneNumber].localPosition.y;
+        _cursor.localPosition = pos;
+
+        //Aボタンでシーン移動
+        if (GameController.Instance.gamepad.buttonA.trigger)
+        {
+            //if (_scenesName[_sceneNumber] != "")
+            //{
+            //    SceneManager.LoadScene(_scenesName[_sceneNumber]);
+            //}
+            //else
+            //{
+            //    Application.Quit();
+            //}
+
+            //藤井が修正
+            if (_menu[_sceneNumber].name == "Next")
+            {
+                if (GameController.Instance.mapLevel < 15)
+                {
+                    GameController.Instance.mapLevel++;
+                    SceneManager.LoadScene(_scenesName[_sceneNumber]);
+                }
+            }
+            else
+                SceneManager.LoadScene(_scenesName[_sceneNumber]);
+        }
+
+        //最終ステージではネクストステージを消す
+        if (GameController.Instance.mapLevel == 15)
+        {
+            if (_menu[_sceneNumber].name == "Next")
+            {
+                _menu[_sceneNumber].gameObject.SetActive(false);
+                _sceneNumber++;
+                // メニュー項目に位置を修正
+                _sceneNumber = Mathf.Clamp(_sceneNumber, 0, _menu.Length - 1);
+                pos = _cursor.localPosition;
+                pos.y = _menu[_sceneNumber].localPosition.y;
+                _cursor.localPosition = pos;
+                return;
+            }
+        }
+
         // 選択肢を上に変更
         if (GameController.Instance.gamepad.leftStick.y >= 0.5F)
         {
@@ -47,24 +99,9 @@ public class MenuCursor : MonoBehaviour {
             _recastCount = 0;
         }
 
-        // メニュー項目に位置を修正
-        _sceneNumber = Mathf.Clamp(_sceneNumber, 0, _menu.Length - 1);
-        Vector3 pos = _cursor.localPosition;
-        pos.y = _menu[_sceneNumber].localPosition.y;
-        _cursor.localPosition = pos;
+       
 
 
-        //Aボタンでシーン移動
-        if (GameController.Instance.gamepad.buttonA.trigger)
-        {
-            if (_scenesName[_sceneNumber] != "")
-            {
-                SceneManager.LoadScene(_scenesName[_sceneNumber]);
-            }
-            else
-            {
-                Application.Quit();
-            }
-        }
+
     }
 }

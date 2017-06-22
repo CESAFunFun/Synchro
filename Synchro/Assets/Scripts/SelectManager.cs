@@ -24,6 +24,8 @@ public class SelectManager : MonoBehaviour
     [SerializeField]
     private Transform[] _cameraPos;
 
+    private Vector3 _lastPos;
+
     // Use this for initialization
     void Start()
     {
@@ -39,8 +41,15 @@ public class SelectManager : MonoBehaviour
         // 入力待ち用の時間を更新
         _curremtTime += Time.deltaTime;
 
+        //カメラの前の座標
+        _lastPos = _camera.transform.position;
+
         // 分割された画面の正面になるように位置の線形補間を行う
         _camera.transform.position = Vector3.MoveTowards(_camera.transform.position, _cameraPos[_number / 5].position, 15F * Time.deltaTime);
+
+        //カメラが移動してたら以下の処理をしない
+        if (_lastPos != _camera.transform.position) return;
+
 
         // 待機時間を超えていれば以下の処理をしない
         if (_curremtTime < _waitTime) return;
