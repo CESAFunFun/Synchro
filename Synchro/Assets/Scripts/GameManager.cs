@@ -31,6 +31,13 @@ public class GameManager : MonoBehaviour
     private AudioClip _failSound;
     [SerializeField]
     private AudioClip _clearSound;
+    [SerializeField]
+    private AudioClip _pauseSound;
+    [SerializeField]
+    private AudioClip _trunSound;
+
+
+
 
     private void Start()
     {
@@ -46,18 +53,23 @@ public class GameManager : MonoBehaviour
                 _player1.isControll = true;
                 _player2.isControll = false;
                 _playerNumber = 0;
+                SoundManager.instance.PlaySFX(_trunSound);
             }
             else if (gamepad.buttonX.trigger)
             {
                 _player1.isControll = false;
                 _player2.isControll = true;
                 _playerNumber = 1;
+
+                SoundManager.instance.PlaySFX(_trunSound);
             }
             else if (gamepad.buttonY.trigger)
             {
                 _player1.isControll = true;
                 _player2.isControll = true;
                 _playerNumber = 2;
+
+                SoundManager.instance.PlaySFX(_trunSound);
             }
         }
 
@@ -84,8 +96,10 @@ public class GameManager : MonoBehaviour
             // 「ポーズ」のGUIを表示
             if (gamepad.startButton.trigger)
             {
+                SoundManager.instance.PlaySFX(_pauseSound);
                 Pause();
                 _pause.SetActive(!_pause.activeSelf);
+               
             }
         }
     }

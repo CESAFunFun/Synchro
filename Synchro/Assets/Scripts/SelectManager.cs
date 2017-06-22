@@ -26,6 +26,9 @@ public class SelectManager : MonoBehaviour
 
     private Vector3 _lastPos;
 
+    [SerializeField]
+    private GameObject[] _nextArrow;
+
     // Use this for initialization
     void Start()
     {
@@ -48,8 +51,17 @@ public class SelectManager : MonoBehaviour
         _camera.transform.position = Vector3.MoveTowards(_camera.transform.position, _cameraPos[_number / 5].position, 15F * Time.deltaTime);
 
         //カメラが移動してたら以下の処理をしない
-        if (_lastPos != _camera.transform.position) return;
-
+        if (_lastPos != _camera.transform.position)
+        {
+            for (int i = 0; i < _nextArrow.Length; i++)
+                _nextArrow[i].SetActive(false);
+            return;
+        }
+        else
+        {
+            for (int i = 0; i < _nextArrow.Length; i++)
+                _nextArrow[i].SetActive(true);
+        }
 
         // 待機時間を超えていれば以下の処理をしない
         if (_curremtTime < _waitTime) return;
