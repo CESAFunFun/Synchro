@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private bool pauseFlag = false;
     private bool goalFlag = false;
 
-    private int _playerNumber = 2;
+    private int _playerNumber = 0;
     private int _oldNumber = -1;
 
     [SerializeField]
@@ -49,22 +49,42 @@ public class GameManager : MonoBehaviour
         // 操作キャラクターの変更
         if (_player1.canChange && _player2.canChange)
         {
+            if(gamepad.buttonX.trigger)
+            {
+                // 操作を左回転
+                _playerNumber++;
+            }
+            if (gamepad.buttonY.trigger)
+            {
+                // 全てへの操作に変更
+                _playerNumber = 3;
+            }
             if (gamepad.buttonB.trigger)
             {
-                ChangeCharacter(true, false, 0);
+                // 操作を右回転
+                _playerNumber--;
             }
-            else if (gamepad.buttonX.trigger)
+
+            // 操作するキャラクターを算出
+            switch (_playerNumber % 3)
             {
-                ChangeCharacter(false, true, 1);
-            }
-            else if (gamepad.buttonY.trigger)
-            {
-                ChangeCharacter(true, true, 2);
+                case 0:
+                    _player1.isControll = true;
+                    _player2.isControll = true;
+                    break;
+                case 1:
+                    _player1.isControll = false;
+                    _player2.isControll = true;
+                    break;
+                case 2:
+                    _player1.isControll = true;
+                    _player2.isControll = false;
+                    break;
             }
         }
 
         // 選択されている色が表示されるように回転
-        turn.rotation = Quaternion.RotateTowards(turn.rotation, Quaternion.Euler(0F, 0F, _playerNumber * 120F), 180F * Time.deltaTime);
+        turn.rotation = Quaternion.RotateTowards(turn.rotation, Quaternion.Euler(0F, 0F, _playerNumber % 3 * 120F), 180F * Time.deltaTime);
 
         // ゴールしていたら「ゴール」のGUIを表示
         if (goalFlag)
@@ -94,19 +114,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ChangeCharacter(bool controll1, bool controll2,int playerNumber)
-    {
-        _player1.isControll = controll1;
-        _player2.isControll = controll2;
-        _playerNumber = playerNumber;
-
-        if (_oldNumber != _playerNumber)
-        {
-            SoundManager.instance.PlaySFX(_trunSound);
-            _oldNumber = _playerNumber;
-        }
-    }
-
     private void Clear()
     {
         goalFlag = true;
@@ -116,9 +123,9 @@ public class GameManager : MonoBehaviour
     private void Fail()
     {
         SoundManager.instance.PlaySFX(_failSound);
-        _player1.Restart();
-        _player2.Restart();
-        child.Restart();
+        //_player1.Restart();
+        //_player2.Restart();
+        //child.Restart();
     }
 
     private void Pause() {
