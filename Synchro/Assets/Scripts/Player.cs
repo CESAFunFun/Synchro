@@ -56,6 +56,8 @@ public class Player : Character
         // パートナーとの座標差分が一定内の場合に線描画を行うための処理
         ConectLine();
 
+        transform.GetChild(0).gameObject.SetActive(isControll);
+
         // ここで入力を受け付けない
         if (!isControll) return;
 
