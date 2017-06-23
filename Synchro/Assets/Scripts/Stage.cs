@@ -40,6 +40,8 @@ public class Stage : MonoBehaviour {
 
         UIAction.mapMoveBy = false;
         UIAction.mapChangeGravity = false;
+        UIAction.mapBlinkGimmick = false;
+        UIAction.mapBrokenGimmick = false;
 
         // マップを一度削除してから生成する
         for (var num = 0; num < transform.childCount; num++)

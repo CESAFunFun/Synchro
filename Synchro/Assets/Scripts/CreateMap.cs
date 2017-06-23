@@ -77,10 +77,10 @@ public class CreateMap : MonoBehaviour {
                                 UIAction.mapChangeGravity = true;
                                 break;
                             case 5:
-                                // broken = true;
+                                UIAction.mapBrokenGimmick = true;
                                 break;
                             case 6:
-                                // blink = true;
+                                UIAction.mapBlinkGimmick = true;
                                 break;
                             default:
                                 break;
@@ -91,8 +91,6 @@ public class CreateMap : MonoBehaviour {
                 sub.x = 0; sub.y -= scaling * 1.25F;
             }
         }
-
-        var hoge = 0;
     }
 
     public void Remove() {
