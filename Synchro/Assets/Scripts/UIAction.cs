@@ -8,6 +8,10 @@ public class UIAction : MonoBehaviour {
     public static bool mapMoveBy;
     [HideInInspector]
     public static bool mapChangeGravity;
+    [HideInInspector]
+    public static bool mapBlinkGimmick;
+    [HideInInspector]
+    public static bool mapBrokenGimmick;
 
     [SerializeField]
     private Character _character;
@@ -16,13 +20,17 @@ public class UIAction : MonoBehaviour {
     private GameObject _imageJump;
     [SerializeField]
     private GameObject _imageGrav;
-    [SerializeField]
-    private GameObject _imageBlink;
+    //[SerializeField]
+    //private GameObject _imageBlink;
 
     [SerializeField]
     private GameObject _imageMoveBy;
     [SerializeField]
     private GameObject _imageChangeGravity;
+    [SerializeField]
+    private GameObject _imageBlinkGimmick;
+    [SerializeField]
+    private GameObject _imageBrokenGimmick;
 
     // Use this for initialization
     void Start () {
@@ -38,5 +46,7 @@ public class UIAction : MonoBehaviour {
 
         _imageMoveBy.SetActive(mapMoveBy);
         _imageChangeGravity.SetActive(mapChangeGravity);
+        _imageBlinkGimmick.SetActive(mapBlinkGimmick);
+        _imageBrokenGimmick.SetActive(mapBrokenGimmick);
     }
 }
