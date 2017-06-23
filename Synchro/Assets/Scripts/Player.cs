@@ -115,16 +115,6 @@ public class Player : Character
 
     public override void Restart()
     {
-        if (_particle)
-        {
-            // パーティクルの位置と角度を修正
-            _particle.transform.eulerAngles = (downGravity) ?
-                Vector3.left * 90F : Vector3.left * 270F;
-            _particle.transform.position = transform.position;
-            _particle.transform.position += _gravity * -10F;
-            // パーティクルを再生
-            _particle.Play();
-        }
         conectflag = false;
         // 基底関数を呼ぶ
         base.Restart();
@@ -134,6 +124,17 @@ public class Player : Character
     {
         if (other.tag == "DeadZone")
         {
+            if (_particle)
+            {
+                // パーティクルの位置と角度を修正
+                _particle.transform.eulerAngles = (downGravity) ?
+                    Vector3.left * 90F : Vector3.left * 270F;
+                _particle.transform.position = transform.position;
+                _particle.transform.position += _gravity * -10F;
+                // パーティクルを再生
+                _particle.Play();
+            }
+            GameObject.Find("GameManager").SendMessage("Fail");
             Restart();
         }
     }

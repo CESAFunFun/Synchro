@@ -116,6 +116,9 @@ public class GameManager : MonoBehaviour
     private void Fail()
     {
         SoundManager.instance.PlaySFX(_failSound);
+        _player1.Restart();
+        _player2.Restart();
+        child.Restart();
     }
 
     private void Pause() {
