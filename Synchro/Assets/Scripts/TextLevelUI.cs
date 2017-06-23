@@ -15,7 +15,7 @@ public class TextLevelUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        levelText.text = GameController.Instance.mapLevel.ToString();
+        levelText.text = "Stage " + GameController.Instance.mapLevel.ToString();
 		
 	}
 }
