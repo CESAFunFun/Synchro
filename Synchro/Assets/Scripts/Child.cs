@@ -12,6 +12,9 @@ public class Child : Character {
     private bool first = false;
 
     private ParticleSystem particle;
+
+    [SerializeField]
+    private AudioClip _connectSound;
     protected override void Start()
     {
         base.Start();
@@ -34,6 +37,7 @@ public class Child : Character {
                 pos.z = players[1].transform.position.z;
                 players[1].transform.position = pos;
                 first = true;
+                SoundManager.instance.PlaySFX(_connectSound);
             }
 
             // 移動処理
