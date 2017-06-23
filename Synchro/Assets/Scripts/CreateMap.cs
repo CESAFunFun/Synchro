@@ -55,18 +55,35 @@ public class CreateMap : MonoBehaviour {
                         var obj = Instantiate(mapdate[integer], transform);
                         obj.transform.position = transform.position + sub;
                         obj.transform.localScale *= scaling;
-                        if (integer == 0)
-                        {
-                            obj.GetComponent<SpriteRenderer>().color = _character.colorMaterial.color;
-                        }
 
-                        if (_character != null)
+                        switch (integer)
                         {
-                            if (integer == 1)
-                            {
-                                _character.transform.position = obj.transform.position;
-                                _character.respawn = _character.transform.position;
-                            }
+                            case 0:
+                                obj.GetComponent<SpriteRenderer>().color = _character.colorMaterial.color;
+                                break;
+                            case 1:
+                                if (_character != null)
+                                {
+                                    _character.transform.position = obj.transform.position;
+                                    _character.respawn = _character.transform.position;
+                                }
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                UIAction.mapMoveBy = true;
+                                break;
+                            case 4:
+                                UIAction.mapChangeGravity = true;
+                                break;
+                            case 5:
+                                // broken = true;
+                                break;
+                            case 6:
+                                // blink = true;
+                                break;
+                            default:
+                                break;
                         }
                     }
                     sub.x += scaling * 1.25F;
@@ -74,6 +91,8 @@ public class CreateMap : MonoBehaviour {
                 sub.x = 0; sub.y -= scaling * 1.25F;
             }
         }
+
+        var hoge = 0;
     }
 
     public void Remove() {

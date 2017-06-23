@@ -38,6 +38,9 @@ public class Stage : MonoBehaviour {
         // 前フレームと同じなら以下の処理を省略
         if (level == _oldLevel) return;
 
+        UIAction.mapMoveBy = false;
+        UIAction.mapChangeGravity = false;
+
         // マップを一度削除してから生成する
         for (var num = 0; num < transform.childCount; num++)
         {

@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIAction : MonoBehaviour {
 
+    [HideInInspector]
+    public static bool mapMoveBy;
+    [HideInInspector]
+    public static bool mapChangeGravity;
+
     [SerializeField]
     private Character _character;
 
@@ -13,7 +18,12 @@ public class UIAction : MonoBehaviour {
     private GameObject _imageGrav;
     [SerializeField]
     private GameObject _imageBlink;
-    
+
+    [SerializeField]
+    private GameObject _imageMoveBy;
+    [SerializeField]
+    private GameObject _imageChangeGravity;
+
     // Use this for initialization
     void Start () {
         //_imageJump.SetActive(_character.canJump);
@@ -25,5 +35,8 @@ public class UIAction : MonoBehaviour {
 	void Update () {
         _imageJump.SetActive(_character.canJump);
         _imageGrav.SetActive(_character.canGravity);
+
+        _imageMoveBy.SetActive(mapMoveBy);
+        _imageChangeGravity.SetActive(mapChangeGravity);
     }
 }
