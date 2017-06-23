@@ -21,11 +21,13 @@ public class Player : Character
     [SerializeField]
     private Child _child;
 
+    [SerializeField]
+    private ParticleSystem _particle;
+
     //[SerializeField]
     //private AudioClip _jumpSFX;
 
     private LineRenderer _line;
-
 
 
     // Use this for initialization
@@ -35,16 +37,13 @@ public class Player : Character
         base.Start();
         gamepad = GameController.Instance.gamepad;
         _line = GetComponent<LineRenderer>();
+        if (_particle)
+        {
+            _particle.startColor = colorMat.color;
+        }
 
         // スプライトの色を決定
         GetComponent<SpriteRenderer>().color = colorMat.color;
-        //// トレイルの色（マテリアル）を決定
-        //colorMat = new Material(Shader.Find("Standard"));
-        //colorMat.SetOverrideTag("RenderType", "Transparent");
-        //colorMat.SetFloat("_Glossiness", 0F);
-        //colorMat.SetFloat("_Metallic", 0F);
-        //colorMat.SetColor("_Color", color);
-        //colorMat.SetColor("_EmissionColor", color);
         GetComponent<TrailRenderer>().material = colorMat;
     }
 
@@ -71,7 +70,6 @@ public class Player : Character
             if (canJump)
             {
                 Jump(jumpPower);
-                //SoundManager.instance.PlaySFX(_jumpSFX);
             }
         }
 
@@ -112,12 +110,29 @@ public class Player : Character
         // 繋がっていたら描画を有効化
         _line.enabled = conectflag;
     }
+
+    public override void Restart()
+    {
+        if (_particle)
+        {
+            // パーティクルの位置と角度を修正
+            _particle.transform.eulerAngles = (downGravity) ?
+                Vector3.left * 90F : Vector3.left * 270F;
+            _particle.transform.position = transform.position;
+            _particle.transform.position += _gravity * -10F;
+            // パーティクルを再生
+            _particle.Play();
+        }
+        conectflag = false;
+        // 基底関数を呼ぶ
+        base.Restart();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "DeadZone")
         {
             Restart();
-            conectflag = false;
         }
     }
 }

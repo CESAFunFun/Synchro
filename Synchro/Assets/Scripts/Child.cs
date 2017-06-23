@@ -68,6 +68,9 @@ public class Child : Character {
         if (other.tag == "DeadZone")
         {
             GameObject.Find("GameManager").SendMessage("Fail");
+            //players[0].Restart();
+            //players[1].Restart();
+            this.Restart();
         }
     }
 }

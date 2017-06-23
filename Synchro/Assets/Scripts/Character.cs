@@ -34,7 +34,7 @@ public class Character : MonoBehaviour {
 
     private Rigidbody _rigidbody;
     private Vector3 _velocity;
-    private Vector3 _gravity;
+    public Vector3 _gravity { get; private set; }
 
     private bool _skyChange;
 
@@ -76,6 +76,7 @@ public class Character : MonoBehaviour {
         _velocity = Vector3.zero;
         // 重力を上方向か下方向に設定
         _gravity = downGravity ? Vector3.down : Vector3.up;
+        transform.eulerAngles = downGravity ? Vector3.left * 0F : Vector3.left * 180F;
 
         // 接地していなければ落下
         if (!isGround)
