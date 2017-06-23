@@ -93,13 +93,16 @@
     <Compile Include="Assets\Scripts\Gimmick\InversGravityByFloor.cs" />
     <Compile Include="Assets\Scripts\Gimmick\MoveByFloor.cs" />
     <Compile Include="Assets\Scripts\Gimmick\MovingFloor.cs" />
+    <Compile Include="Assets\Scripts\MenuCursor.cs" />
     <Compile Include="Assets\Scripts\NextStege.cs" />
     <Compile Include="Assets\Scripts\PlayTrailLine.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Result.cs" />
     <Compile Include="Assets\Scripts\SelectManager.cs" />
     <Compile Include="Assets\Scripts\SelectUI.cs" />
+    <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Stage.cs" />
+    <Compile Include="Assets\Scripts\TextLevelUI.cs" />
     <Compile Include="Assets\Scripts\Timer.cs" />
     <Compile Include="Assets\Scripts\TitleCursor.cs" />
     <Compile Include="Assets\Scripts\TrailLineCreater.cs" />

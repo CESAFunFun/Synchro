@@ -21,8 +21,8 @@ public class Player : Character
     [SerializeField]
     private Child _child;
 
-    [SerializeField]
-    private AudioClip _jumpSFX;
+    //[SerializeField]
+    //private AudioClip _jumpSFX;
 
     private LineRenderer _line;
 
@@ -71,7 +71,7 @@ public class Player : Character
             if (canJump)
             {
                 Jump(jumpPower);
-                SoundManager.instance.PlaySFX(_jumpSFX);
+                //SoundManager.instance.PlaySFX(_jumpSFX);
             }
         }
 

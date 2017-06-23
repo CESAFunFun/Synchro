@@ -41,6 +41,9 @@ public class Character : MonoBehaviour {
     [SerializeField]
     protected Material colorMat;
 
+    [SerializeField]
+    private AudioClip _jumpSFX;
+
     public Material colorMaterial { get { return colorMat; } }
 
 
@@ -99,6 +102,8 @@ public class Character : MonoBehaviour {
             // 自身の上方向(重力方向の逆)に力を加える
             var jumpVec = -_gravity.normalized;
             _rigidbody.AddForce(jumpVec * power * 50F);
+            // ジャンプ音を再生
+            if(_jumpSFX) SoundManager.instance.PlaySFX(_jumpSFX);
         }
     }
 

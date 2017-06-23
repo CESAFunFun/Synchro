@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private bool goalFlag = false;
 
     private int _playerNumber = 2;
+    private int _oldNumber = -1;
 
     [SerializeField]
     private Player _player1;
@@ -50,26 +51,15 @@ public class GameManager : MonoBehaviour
         {
             if (gamepad.buttonB.trigger)
             {
-                _player1.isControll = true;
-                _player2.isControll = false;
-                _playerNumber = 0;
-                SoundManager.instance.PlaySFX(_trunSound);
+                ChangeCharacter(true, false, 0);
             }
             else if (gamepad.buttonX.trigger)
             {
-                _player1.isControll = false;
-                _player2.isControll = true;
-                _playerNumber = 1;
-
-                SoundManager.instance.PlaySFX(_trunSound);
+                ChangeCharacter(false, true, 1);
             }
             else if (gamepad.buttonY.trigger)
             {
-                _player1.isControll = true;
-                _player2.isControll = true;
-                _playerNumber = 2;
-
-                SoundManager.instance.PlaySFX(_trunSound);
+                ChangeCharacter(true, true, 2);
             }
         }
 
@@ -101,6 +91,19 @@ public class GameManager : MonoBehaviour
                 _pause.SetActive(!_pause.activeSelf);
                
             }
+        }
+    }
+
+    private void ChangeCharacter(bool controll1, bool controll2,int playerNumber)
+    {
+        _player1.isControll = controll1;
+        _player2.isControll = controll2;
+        _playerNumber = playerNumber;
+
+        if (_oldNumber != _playerNumber)
+        {
+            SoundManager.instance.PlaySFX(_trunSound);
+            _oldNumber = _playerNumber;
         }
     }
 

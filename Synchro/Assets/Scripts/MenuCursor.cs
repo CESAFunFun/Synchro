@@ -48,11 +48,11 @@ public class MenuCursor : MonoBehaviour
                 if (GameController.Instance.mapLevel < 15)
                 {
                     GameController.Instance.mapLevel++;
-                    SceneManager.LoadScene(_scenesName[_sceneNumber]);
+                    //SceneManager.LoadScene(_scenesName[_sceneNumber]);
                 }
             }
-            else
-                SceneManager.LoadScene(_scenesName[_sceneNumber]);
+            //else
+            SceneManager.LoadScene(_scenesName[_sceneNumber]);
         }
 
         //最終ステージではネクストステージを消す
@@ -98,10 +98,5 @@ public class MenuCursor : MonoBehaviour
         {
             _recastCount = 0;
         }
-
-       
-
-
-
     }
 }
