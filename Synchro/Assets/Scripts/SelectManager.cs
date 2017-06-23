@@ -13,6 +13,8 @@ public class SelectManager : MonoBehaviour
     [SerializeField]
     private int _number = 0;
 
+    private int _postnum;
+
     [SerializeField]
     float _waitTime;
 
@@ -28,6 +30,9 @@ public class SelectManager : MonoBehaviour
 
     [SerializeField]
     private GameObject[] _nextArrow;
+
+    [SerializeField]
+    private AudioClip _cursorSound;
 
     // Use this for initialization
     void Start()
@@ -85,11 +90,14 @@ public class SelectManager : MonoBehaviour
         if (num != 0)
         {
             _stagenum[_number].RotFlag = false;
+            _postnum = _number;
             _number += num;
             _number = Mathf.Clamp(_number, 0, _stagenum.Length - 1);
             GameController.Instance.mapLevel = _number + 1;
             _stagenum[_number].RotFlag = true;
             _curremtTime = 0;
+            if(_postnum!=_number)
+                SoundManager.instance.PlaySFX(_cursorSound);
         }
 
         // プレイシーンへ移行

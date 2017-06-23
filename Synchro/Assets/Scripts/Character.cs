@@ -44,6 +44,9 @@ public class Character : MonoBehaviour {
     [SerializeField]
     private AudioClip _jumpSFX;
 
+    [SerializeField]
+    private AudioClip _gravitySFX;
+
     public Material colorMaterial { get { return colorMat; } }
 
 
@@ -113,12 +116,14 @@ public class Character : MonoBehaviour {
             // 一度だけ宙に浮かせて反転させる
             isGround = false;
             downGravity = !downGravity;
+            SoundManager.instance.PlaySFX(_gravitySFX);
         }
         else if(_skyChange)
         {
             isGround = false;
             downGravity = !downGravity;
             _skyChange = false;
+            SoundManager.instance.PlaySFX(_gravitySFX);
         }
     }
 

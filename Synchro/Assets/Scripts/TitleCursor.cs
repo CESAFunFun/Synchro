@@ -23,6 +23,8 @@ public class TitleCursor : MonoBehaviour {
     [SerializeField]
     private AudioClip _okSound;
 
+    [SerializeField]
+    private AudioClip _cursorSound;
     // Use this for initialization
     void Start () {
 		
@@ -42,6 +44,7 @@ public class TitleCursor : MonoBehaviour {
                     pos.y = _play.localPosition.y;
                     _cursor[i].localPosition = pos;
                 }
+                SoundManager.instance.PlaySFX(_cursorSound);
             }
             _playflag = true;
         }
@@ -56,6 +59,7 @@ public class TitleCursor : MonoBehaviour {
                     pos.y = _exit.localPosition.y;
                     _cursor[i].localPosition = pos;
                 }
+                SoundManager.instance.PlaySFX(_cursorSound);
             }
             _playflag = false;
         }

@@ -20,6 +20,9 @@ public class MenuCursor : MonoBehaviour
     private int _sceneNumber = 0;
     private int _recastCount = 0;
 
+    [SerializeField]
+    private AudioClip _cursorSound;
+
     // Update is called once per frame
     void Update()
     {
@@ -78,6 +81,7 @@ public class MenuCursor : MonoBehaviour
             {
                 _sceneNumber--;
                 _recastCount = 0;
+                SoundManager.instance.PlaySFX(_cursorSound);
             }
         }
         else
@@ -92,6 +96,7 @@ public class MenuCursor : MonoBehaviour
             {
                 _sceneNumber++;
                 _recastCount = 0;
+                SoundManager.instance.PlaySFX(_cursorSound);
             }
         }
         else
