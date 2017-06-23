@@ -99,6 +99,11 @@ public class SelectManager : MonoBehaviour
             SceneManager.LoadScene("Play");
         }
 
+        if(_gamepad.buttonB.trigger)
+        {
+            SceneManager.LoadScene("Title");
+        }
+
         //if (_number <= 4 && _number >= 0)
         //{
         //    _camera.transform.position = Vector3.Lerp(_camera.transform.position, _cameraPos[0].position, 1.0f);

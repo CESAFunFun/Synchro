@@ -63,7 +63,7 @@ public class TitleCursor : MonoBehaviour {
         //Aボタンでシーン移動
         if (GameController.Instance.gamepad.buttonA.trigger)
         {
-
+            GameController.Instance.mapLevel = 1;
             SoundManager.instance.PlaySFX(_okSound);
             if (_playflag) SceneManager.LoadScene(_sceneName);
             else Application.Quit();
