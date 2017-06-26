@@ -52,7 +52,14 @@ public class GameManager : MonoBehaviour
             if(gamepad.buttonX.trigger)
             {
                 // 操作を左回転
-                _playerNumber++;
+                if(_playerNumber < 2)
+                {
+                    _playerNumber++;
+                }
+                else
+                {
+                    _playerNumber = 0;
+                }
             }
             if (gamepad.buttonY.trigger)
             {
@@ -62,7 +69,14 @@ public class GameManager : MonoBehaviour
             if (gamepad.buttonB.trigger)
             {
                 // 操作を右回転
-                _playerNumber--;
+                if (_playerNumber > 0)
+                {
+                    _playerNumber--;
+                }
+                else
+                {
+                    _playerNumber = 3;
+                }
             }
 
             // 操作するキャラクターを算出
