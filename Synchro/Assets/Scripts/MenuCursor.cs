@@ -59,7 +59,7 @@ public class MenuCursor : MonoBehaviour
         }
 
         //最終ステージではネクストステージを消す
-        if (GameController.Instance.mapLevel == 15)
+        if (GameController.Instance.mapLevel == GameController.Instance.levelMax)
         {
             if (_menu[_sceneNumber].name == "Next")
             {
