@@ -18,6 +18,10 @@ public class CreateMap : MonoBehaviour {
     public float scaling = 1F;
 
 
+    private void Start() {
+        GameController.Instance.levelMax = _mapchip.Length;
+    }
+
     public void Make(int stageLevel) {
         int row = 0;
         Vector3 sub = Vector3.zero;

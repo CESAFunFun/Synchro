@@ -48,7 +48,7 @@ public class MenuCursor : MonoBehaviour
             //藤井が修正
             if (_menu[_sceneNumber].name == "Next")
             {
-                if (GameController.Instance.mapLevel < 15)
+                if (GameController.Instance.mapLevel < GameController.Instance.levelMax)
                 {
                     GameController.Instance.mapLevel++;
                     //SceneManager.LoadScene(_scenesName[_sceneNumber]);
