@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
     public int mapLevel;
+    public int levelMax;
 
     [HideInInspector]
     public Gamepad gamepad;

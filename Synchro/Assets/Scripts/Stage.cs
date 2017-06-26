@@ -28,7 +28,27 @@ public class Stage : MonoBehaviour {
     }
 
     private void Update() {
-        Remake();
+        // 静的なクラスからレベルを取得
+        var level = GameController.Instance.mapLevel;
+
+        // 前フレームと同じなら以下の処理を省略
+        if (level == _oldLevel) return;
+
+        UIAction.mapMoveBy = false;
+        UIAction.mapChangeGravity = false;
+        UIAction.mapBlinkGimmick = false;
+        UIAction.mapBrokenGimmick = false;
+
+        // マップを一度削除してから生成する
+        for (var num = 0; num < transform.childCount; num++)
+        {
+            var map = transform.GetChild(num).GetComponent<CreateMap>();
+            map.Remove();
+            map.Make(level);
+        }
+
+        // 書き換えが一度きりになるように設定
+        _oldLevel = level;
     }
 
     private void Remake() {
