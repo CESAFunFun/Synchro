@@ -42,11 +42,11 @@ public class MenuCursor : MonoBehaviour
             //藤井が修正
             if (_menu[_sceneNumber].name == "Next")
             {
-                if (GameController.Instance.mapLevel < GameController.Instance.levelMax)
-                {
-                    GameController.Instance.mapLevel++;
-                    //SceneManager.LoadScene(_scenesName[_sceneNumber]);
-                }
+                GameController.Instance.mapLevel++;
+            }
+            else
+            {
+                GameController.Instance.mapLevel = Mathf.Clamp(GameController.Instance.mapLevel, 1, GameController.Instance.levelMax - 1);
             }
             //else
             SceneManager.LoadScene(_scenesName[_sceneNumber]);
@@ -62,7 +62,6 @@ public class MenuCursor : MonoBehaviour
         {
             _menu[0].GetComponent<UnityEngine.UI.Text>().text = "Title";
             _scenesName[0] = "Title";
-            GameController.Instance.mapLevel = 1;
         }
 
         // 選択肢を上に変更
