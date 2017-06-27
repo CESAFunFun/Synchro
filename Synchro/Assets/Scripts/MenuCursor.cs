@@ -62,6 +62,7 @@ public class MenuCursor : MonoBehaviour
         {
             _menu[0].GetComponent<UnityEngine.UI.Text>().text = "Title";
             _scenesName[0] = "Title";
+            GameController.Instance.mapLevel = 1;
         }
 
         // 選択肢を上に変更

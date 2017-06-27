@@ -6,13 +6,13 @@ public class SinCurve : MonoBehaviour {
 
     [SerializeField]
     private Vector3 anchor;
-    [SerializeField]
-    private Transform point;
 
     [SerializeField]
     private float width = 1F;
     [SerializeField]
     private float speed = 1F;
+    [SerializeField]
+    private bool adb = false;
     [SerializeField]
     private bool sinX = false;
     [SerializeField]
@@ -22,9 +22,10 @@ public class SinCurve : MonoBehaviour {
 
     void Update () {
         value += Time.deltaTime * speed;
-        var sin = Mathf.Abs(Mathf.Sin(value) * width);
+        var sin = Mathf.Sin(value) * width;
+        if (adb) sin = Mathf.Abs(sin);
 
-        if(sinX) transform.position = anchor + point.position + Vector3.right * sin;
-        if(sinY) transform.position = anchor + point.position + Vector3.up * sin;
+        if(sinX) transform.localPosition = anchor + Vector3.right * sin;
+        if(sinY) transform.localPosition = anchor + Vector3.up * sin;
 	}
 }

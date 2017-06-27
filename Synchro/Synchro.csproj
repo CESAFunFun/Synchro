@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\Result.cs" />
     <Compile Include="Assets\Scripts\SelectManager.cs" />
     <Compile Include="Assets\Scripts\SelectUI.cs" />
+    <Compile Include="Assets\Scripts\SinCurve.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Stage.cs" />
     <Compile Include="Assets\Scripts\TextLevelUI.cs" />

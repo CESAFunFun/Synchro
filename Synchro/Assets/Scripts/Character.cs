@@ -70,8 +70,8 @@ public class Character : MonoBehaviour {
         // 重力を上方向か下方向に設定
         _gravity = downGravity ? Vector3.down : Vector3.up;
     }
-	
-	protected virtual void Update () {
+
+    protected virtual void Update() {
         // 重力方向の線を描画
         Debug.DrawLine(transform.position, transform.position + _gravity.normalized * G_LENGTH);
 

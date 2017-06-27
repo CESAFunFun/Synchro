@@ -56,6 +56,7 @@ public class Player : Character
         // パートナーとの座標差分が一定内の場合に線描画を行うための処理
         ConectLine();
 
+        // 操作可能かでマーカーの表示を変える
         transform.GetChild(0).gameObject.SetActive(isControll);
 
         // ここで入力を受け付けない
@@ -124,7 +125,7 @@ public class Player : Character
     {
         if (other.tag == "DeadZone")
         {
-            if (_particle)
+            if (_particle && conectflag)
             {
                 // パーティクルの位置と角度を修正
                 _particle.transform.eulerAngles = (downGravity) ?

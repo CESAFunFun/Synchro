@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
                 _playerNumber = 2;
             }
         }
-        Debug.Log(_playerNumber);
+
         // 操作するキャラクターを算出
         switch (_playerNumber % 3)
         {
