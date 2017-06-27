@@ -19,7 +19,7 @@ public class CreateMap : MonoBehaviour {
 
 
     private void Start() {
-        GameController.Instance.levelMax = _mapchip.Length;
+        GameController.Instance.levelMax = _mapchip.Length - 1;
     }
 
     public void Make(int stageLevel) {

@@ -12,6 +12,9 @@ public class MenuCursor : MonoBehaviour
     [SerializeField]
     private RectTransform[] _menu;
 
+    [SerializeField]
+    private string keep;
+
     private Vector3 pos;
 
     [SerializeField]
@@ -36,15 +39,6 @@ public class MenuCursor : MonoBehaviour
         //Aボタンでシーン移動
         if (GameController.Instance.gamepad.buttonA.trigger)
         {
-            //if (_scenesName[_sceneNumber] != "")
-            //{
-            //    SceneManager.LoadScene(_scenesName[_sceneNumber]);
-            //}
-            //else
-            //{
-            //    Application.Quit();
-            //}
-
             //藤井が修正
             if (_menu[_sceneNumber].name == "Next")
             {
@@ -59,19 +53,15 @@ public class MenuCursor : MonoBehaviour
         }
 
         //最終ステージではネクストステージを消す
-        if (GameController.Instance.mapLevel == GameController.Instance.levelMax)
+        if (GameController.Instance.mapLevel != GameController.Instance.levelMax)
         {
-            if (_menu[_sceneNumber].name == "Next")
-            {
-                _menu[_sceneNumber].gameObject.SetActive(false);
-                _sceneNumber++;
-                // メニュー項目に位置を修正
-                _sceneNumber = Mathf.Clamp(_sceneNumber, 0, _menu.Length - 1);
-                pos = _cursor.localPosition;
-                pos.y = _menu[_sceneNumber].localPosition.y;
-                _cursor.localPosition = pos;
-                return;
-            }
+            _menu[0].GetComponent<UnityEngine.UI.Text>().text = keep;
+            _scenesName[0] = "Play";
+        }
+        else
+        {
+            _menu[0].GetComponent<UnityEngine.UI.Text>().text = "Title";
+            _scenesName[0] = "Title";
         }
 
         // 選択肢を上に変更
