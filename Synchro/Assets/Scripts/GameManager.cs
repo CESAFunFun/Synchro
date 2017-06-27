@@ -61,13 +61,13 @@ public class GameManager : MonoBehaviour
             Pause();
             _clear.SetActive(goalFlag);
 
-            if (gamepad.buttonA.trigger)
-            {
-                if (GameController.Instance.mapLevel < GameController.Instance.levelMax)
-                {
-                    GameController.Instance.mapLevel++;
-                }
-            }
+            //if (gamepad.buttonA.trigger)
+            //{
+            //    if (GameController.Instance.mapLevel < GameController.Instance.levelMax)
+            //    {
+            //        GameController.Instance.mapLevel++;
+            //    }
+            //}
         }
         else
         {
