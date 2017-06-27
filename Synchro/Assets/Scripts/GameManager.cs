@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     private int _playerNumber = 0;
     private int _oldNumber = -1;
 
+    private float turnCounter = 0F;
+    private float recastTimer = 0.5F;
+
     [SerializeField]
     private Player _player1;
     [SerializeField]
@@ -46,56 +49,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update() {
-        // 操作キャラクターの変更
-        if (_player1.canChange && _player2.canChange)
-        {
-            if(gamepad.buttonX.trigger)
-            {
-                // 操作を左回転
-                if(_playerNumber < 2)
-                {
-                    _playerNumber++;
-                }
-                else
-                {
-                    _playerNumber = 0;
-                }
-            }
-            if (gamepad.buttonY.trigger)
-            {
-                // 全てへの操作に変更
-                _playerNumber = 3;
-            }
-            if (gamepad.buttonB.trigger)
-            {
-                // 操作を右回転
-                if (_playerNumber > 0)
-                {
-                    _playerNumber--;
-                }
-                else
-                {
-                    _playerNumber = 3;
-                }
-            }
-
-            // 操作するキャラクターを算出
-            switch (_playerNumber % 3)
-            {
-                case 0:
-                    _player1.isControll = true;
-                    _player2.isControll = true;
-                    break;
-                case 1:
-                    _player1.isControll = false;
-                    _player2.isControll = true;
-                    break;
-                case 2:
-                    _player1.isControll = true;
-                    _player2.isControll = false;
-                    break;
-            }
-        }
+        // 操作するキャラクターを切り替える
+        SwitchPlayerControll();
 
         // 選択されている色が表示されるように回転
         turn.rotation = Quaternion.RotateTowards(turn.rotation, Quaternion.Euler(0F, 0F, _playerNumber % 3 * 120F), 180F * Time.deltaTime);
@@ -124,6 +79,77 @@ public class GameManager : MonoBehaviour
                 _pause.SetActive(!_pause.activeSelf);
                
             }
+        }
+    }
+
+    private void SwitchPlayerControll() {
+
+        // マップ上で操作不可を設定されれば以下を処理しない
+        if (!_player1.canChange || !_player2.canChange) return;
+
+        turnCounter += Time.deltaTime;
+        if (turnCounter <= recastTimer) return;
+
+        // 操作キャラクターをボタンで切り替え
+        if (gamepad.buttonX.trigger)
+        {
+            // UIの回転音を再生
+            SoundManager.instance.PlaySFX(_trunSound);
+            turnCounter = 0F;
+
+            // 操作を左回転
+            if (_playerNumber < 2)
+            {
+                _playerNumber++;
+            }
+            else
+            {
+                _playerNumber = 0;
+            }
+        }
+
+        if (gamepad.buttonY.trigger)
+        {
+            // UIの回転音を再生
+            SoundManager.instance.PlaySFX(_trunSound);
+            turnCounter = 0F;
+
+            // 全てへの操作に変更
+            _playerNumber = 3;
+        }
+
+        if (gamepad.buttonB.trigger)
+        {
+            // UIの回転音を再生
+            SoundManager.instance.PlaySFX(_trunSound);
+            turnCounter = 0F;
+
+            // 操作を右回転
+            if (_playerNumber > 0)
+            {
+                _playerNumber--;
+            }
+            else
+            {
+                _playerNumber = 3;
+            }
+        }
+
+        // 操作するキャラクターを算出
+        switch (_playerNumber % 3)
+        {
+            case 0:
+                _player1.isControll = true;
+                _player2.isControll = true;
+                break;
+            case 1:
+                _player1.isControll = false;
+                _player2.isControll = true;
+                break;
+            case 2:
+                _player1.isControll = true;
+                _player2.isControll = false;
+                break;
         }
     }
 
