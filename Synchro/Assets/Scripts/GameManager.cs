@@ -111,11 +111,12 @@ public class GameManager : MonoBehaviour
         if (gamepad.buttonY.trigger)
         {
             // UIの回転音を再生
+            if(_playerNumber != 0)
             SoundManager.instance.PlaySFX(_trunSound);
             turnCounter = 0F;
 
             // 全てへの操作に変更
-            _playerNumber = 3;
+            _playerNumber = 0;
         }
 
         if (gamepad.buttonB.trigger)
@@ -131,10 +132,10 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                _playerNumber = 3;
+                _playerNumber = 2;
             }
         }
-
+        Debug.Log(_playerNumber);
         // 操作するキャラクターを算出
         switch (_playerNumber % 3)
         {
