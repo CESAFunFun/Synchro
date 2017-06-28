@@ -35,6 +35,7 @@ public class Player : Character
     {
         // キャラクターの初期化
         base.Start();
+        conectflag = false;
         gamepad = GameController.Instance.gamepad;
         _line = GetComponent<LineRenderer>();
         if (_particle)
@@ -116,7 +117,7 @@ public class Player : Character
 
     public override void Restart()
     {
-        conectflag = false;
+        //conectflag = false;
         // 基底関数を呼ぶ
         base.Restart();
     }
@@ -125,15 +126,15 @@ public class Player : Character
     {
         if (other.tag == "DeadZone")
         {
-            if (_particle && conectflag)
+            if (conectflag)
             {
                 // パーティクルの位置と角度を修正
                 _particle.transform.eulerAngles = (downGravity) ?
                     Vector3.left * 90F : Vector3.left * 270F;
                 _particle.transform.position = transform.position;
-                _particle.transform.position += _gravity * -10F;
+                //_particle.transform.position += _gravity * -10F;
                 // パーティクルを再生
-                _particle.Play();
+                //_particle.Play();
             }
             GameObject.Find("GameManager").SendMessage("Fail");
             Restart();

@@ -40,15 +40,14 @@ public class MenuCursor : MonoBehaviour
         if (GameController.Instance.gamepad.buttonA.trigger)
         {
             //藤井が修正
-            if (_menu[_sceneNumber].name == "Next")
+            if (_menu[_sceneNumber].GetComponent<UnityEngine.UI.Text>().text == "Next Stage")
             {
                 GameController.Instance.mapLevel++;
             }
             else
             {
-                GameController.Instance.mapLevel = Mathf.Clamp(GameController.Instance.mapLevel, 1, GameController.Instance.levelMax - 1);
+                GameController.Instance.mapLevel = 1;
             }
-            //else
             SceneManager.LoadScene(_scenesName[_sceneNumber]);
         }
 
